@@ -11,6 +11,7 @@ System.config({
   },
   paths: {
     "github:*": "jspm_packages/github/*",
+    "aurelia-adal/*": "dist/*",
     "npm:*": "jspm_packages/npm/*"
   },
 
