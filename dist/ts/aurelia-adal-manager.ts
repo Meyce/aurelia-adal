@@ -1,9 +1,9 @@
-﻿import {inject} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
 import {AureliaAdalConfig} from './aurelia-adal-config';
 import * as Adal from 'adal';
 
 @inject(Adal)
-export class AureliaAdal {
+export class AureliaAdalManager {
 
   private adal: Adal;
   private oauthData = {

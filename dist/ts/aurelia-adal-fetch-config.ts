@@ -1,10 +1,10 @@
 import {HttpClient, HttpClientConfiguration} from 'aurelia-fetch-client';
-import {AureliaAdal} from './aurelia-adal';
+import {AureliaAdalManager} from './aurelia-adal-manager';
 import {inject} from 'aurelia-framework';
 
-@inject(HttpClient, AureliaAdal)
+@inject(HttpClient, AureliaAdalManager)
 export class AureliaAdalFetchConfig {
-  constructor(private httpClient: HttpClient, private aureliaAdal: AureliaAdal) {
+  constructor(private httpClient: HttpClient, private aureliaAdal: AureliaAdalManager) {
 
   }
 

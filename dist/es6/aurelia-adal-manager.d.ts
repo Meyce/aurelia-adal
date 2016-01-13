@@ -1,5 +1,5 @@
 import { AureliaAdalConfig } from './aurelia-adal-config';
-export declare class AureliaAdal {
+export declare class AureliaAdalManager {
     private adalConstructor;
     private adal;
     private oauthData;

@@ -1,11 +1,11 @@
 ﻿import {inject} from 'aurelia-framework';
 import {NavigationInstruction, Redirect} from 'aurelia-router';
-import {AureliaAdal} from './aurelia-adal';
+import {AureliaAdalManager} from './aurelia-adal-manager';
 
-@inject(AureliaAdal)
+@inject(AureliaAdalManager)
 export class AureliaAdalAuthorizeStep {
   
-  constructor(private aureliaAdal: AureliaAdal) {
+  constructor(private aureliaAdal: AureliaAdalManager) {
     
   }
 
