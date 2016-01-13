@@ -3,7 +3,7 @@ import {AureliaAdal} from './aurelia-adal';
 import {inject} from 'aurelia-framework';
 
 @inject(HttpClient, AureliaAdal)
-export class AdalFetchConfig {
+export class AureliaAdalFetchConfig {
   constructor(private httpClient: HttpClient, private aureliaAdal: AureliaAdal) {
 
   }

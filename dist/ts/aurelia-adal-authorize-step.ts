@@ -3,7 +3,7 @@ import {NavigationInstruction, Redirect} from 'aurelia-router';
 import {AureliaAdal} from './aurelia-adal';
 
 @inject(AureliaAdal)
-export class AdalAuthorizeStep {
+export class AureliaAdalAuthorizeStep {
   
   constructor(private aureliaAdal: AureliaAdal) {
     
