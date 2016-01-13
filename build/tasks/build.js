@@ -9,6 +9,8 @@ var compilerOptions = require('../babel-options');
 var assign = Object.assign || require('object.assign');
 var typescript = require('gulp-typescript');
 var tsc = require('typescript');
+var rename = require('gulp-rename');
+var merge = require('merge2');
 
 var tsProjectES6 = typescript.createProject('./tsconfig.json', { typescript: tsc });
 var tsProjectAMD = typescript.createProject('./tsconfig.json', { typescript: tsc, module: 'amd' });
@@ -18,22 +20,30 @@ var tsProjectSystem = typescript.createProject('./tsconfig.json', { typescript: 
 function buildFromTs(tsProject, outputPath, compileTo5) {
     var src = paths.dtsSrc.concat(paths.source);
     if (compileTo5) {
-        return gulp.src(src)
+        var tsResult = gulp.src(src)
         .pipe(plumber())
         .pipe(sourcemaps.init({loadMaps: true}))    
         .pipe(changed(outputPath, {extension: '.js'}))
-        .pipe(typescript(tsProject))
-        .pipe(to5())
-        .pipe(sourcemaps.write({includeContent: true}))
-        .pipe(gulp.dest(outputPath));
+        .pipe(typescript(tsProject));
+        
+        return merge([
+            tsResult.dts.pipe(gulp.dest(outputPath)),
+            tsResult.js.pipe(to5())
+            .pipe(sourcemaps.write({includeContent: true}))
+            .pipe(gulp.dest(outputPath))
+        ]);
     } else {
-        return gulp.src(src)
+        var tsResult2 = gulp.src(src)
         .pipe(plumber())
         .pipe(sourcemaps.init({loadMaps: true}))    
         .pipe(changed(outputPath, {extension: '.js'}))
-        .pipe(typescript(tsProject))  
-        .pipe(sourcemaps.write({includeContent: true}))
-        .pipe(gulp.dest(outputPath));
+        .pipe(typescript(tsProject));
+        
+        return merge([
+            tsResult2.dts.pipe(gulp.dest(outputPath)),
+            tsResult2.js.pipe(sourcemaps.write({includeContent: true}))
+            .pipe(gulp.dest(outputPath))
+        ]);
     }
 }
 
