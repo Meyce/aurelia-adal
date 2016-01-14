@@ -1,9 +1,0 @@
-"use strict";
-
-System.register([], function (exports_1) {
-    return {
-        setters: [],
-        execute: function execute() {}
-    };
-});
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImF1cmVsaWEtYWRhbC1jb25maWcuanMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6Ijs7QUFBQSxNQUFNLENBQUMsUUFBUSxDQUFDLEVBQUUsRUFBRSxVQUFTLFNBQVMsRUFBRTtBQUNwQyxXQUFPO0FBQ0gsZUFBTyxFQUFDLEVBQUU7QUFDVixlQUFPLEVBQUUsbUJBQVcsRUFDbkI7S0FDSixDQUFBO0NBQ0osQ0FBQyxDQUFDIiwiZmlsZSI6ImF1cmVsaWEtYWRhbC1jb25maWcuanMiLCJzb3VyY2VzQ29udGVudCI6WyJTeXN0ZW0ucmVnaXN0ZXIoW10sIGZ1bmN0aW9uKGV4cG9ydHNfMSkge1xuICAgIHJldHVybiB7XG4gICAgICAgIHNldHRlcnM6W10sXG4gICAgICAgIGV4ZWN1dGU6IGZ1bmN0aW9uKCkge1xuICAgICAgICB9XG4gICAgfVxufSk7XG4iXSwic291cmNlUm9vdCI6Ii9zb3VyY2UvIn0=

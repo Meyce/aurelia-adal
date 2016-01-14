@@ -23,7 +23,8 @@ var tsProjectCJS = typescript.createProject('./tsconfig.json', { typescript: tsc
 var tsProjectSystem = typescript.createProject('./tsconfig.json', { typescript: tsc, module: 'system' });
 
 function buildFromTs(tsProject, outputPath, compileTo5) {
-    var src = paths.dtsSrc.concat(paths.source);
+    //var src = paths.dtsSrc.concat(paths.source);
+    var src = paths.dtsSrc.concat(paths.output + 'temp/' + tsName);
     if (compileTo5) {
         return gulp.src(src)
         .pipe(plumber())
