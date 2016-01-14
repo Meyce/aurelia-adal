@@ -1,6 +1,8 @@
 var path = require('path');
+var fs = require('fs');
 
 var appRoot = 'src/';
+var pkg = JSON.parse(fs.readFileSync('./package.json', 'utf-8'));
 
 module.exports = {
   root: appRoot,
@@ -17,5 +19,6 @@ module.exports = {
   ],
   es6DtsSrc: [
       'es6-typings/**/*.ts'
-  ]
+  ],
+  packageName: pkg.name
 };
