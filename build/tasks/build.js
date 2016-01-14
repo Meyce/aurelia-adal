@@ -55,6 +55,9 @@ gulp.task('build-index', function(){
       return callback();
     }))
     .pipe(concat(tsName))
+    // .pipe(insert.transform(function(contents) {
+    //   return 'module Temp {\n' + contents + '}'
+    // }))
     .pipe(insert.transform(function(contents) {
       return tools.createImportBlock(importsToAdd) + contents;
     }))
@@ -62,6 +65,23 @@ gulp.task('build-index', function(){
 });
 
 gulp.task('build-index-definition', function() {
+  var src = paths.dtsSrc.concat(paths.output + 'temp/' + tsName);
+  
+  var tsResult = gulp.src(src)
+    .pipe(plumber())
+    .pipe(sourcemaps.init({loadMaps: true}))    
+    .pipe(changed(paths.output, {extension: '.js'}))
+    .pipe(typescript(tsProjectCJS));
+    
+  return tsResult.dts
+    .pipe(insert.transform(function(contents) {
+      var newContent = 'declare module \'' + paths.packageName + '\' {\n' + contents.replace(/export declare/g, 'export') + '}'; 
+      return newContent.replace(/\n/g, '\n  ');
+    }))
+    .pipe(gulp.dest(paths.output + 'temp'));
+})
+
+gulp.task('build-index-definition2', function() {
   var src = paths.dtsSrc.concat(paths.output + 'temp/' + tsName);
   
   return gulp.src(src)
