@@ -45,4 +45,4 @@ declare module 'aurelia-adal' {
       configure(): void;
   }
   export function configure(frameworkConfig: FrameworkConfiguration, config: AureliaAdalConfig): void;
-  }
+}
