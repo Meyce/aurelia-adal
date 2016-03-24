@@ -1,0 +1,27 @@
+﻿import {inject} from 'aurelia-framework'
+import {HttpClient} from 'aurelia-fetch-client'
+//import {AureliaAdalManager} from './aurelia-adal-manager'
+import {FetchTokenInterceptor} from './fetch-token-interceptor'
+import 'fetch'; // ? isomorphic-fetch
+
+@inject(HttpClient, FetchTokenInterceptor )
+export class FetchConfig {
+
+  constructor(httpClient, tokenInterceptor) {
+    this.httpClient = httpClient;
+    this.tokenInterceptor = tokenInterceptor;
+  }
+
+  configure() {
+    this.httpClient.configure(httpConfig => {
+      httpConfig
+          .withDefaults({
+            headers: {
+              'Accept': 'application/json'
+            }
+          })
+          .withInterceptor(this.tokenInterceptor);
+    });
+  }
+
+}
