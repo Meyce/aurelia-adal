@@ -90,7 +90,7 @@ export class AdalManager {
     } else {
       // directly start login flow
       this.adal._saveItem(this.adal.CONSTANTS.STORAGE.START_PAGE, path);
-      this.adal.info('Start login at:' + this.platform.location.href // window.location.href);
+      this.adal.info('Start login at:' + this.platform.location.href); // window.location.href);
       // TODO: broadcast login redirect?
       this.adal.login();
       return handler();
