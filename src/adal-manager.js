@@ -142,4 +142,8 @@ export class AdalManager {
     }
   }
 
+  logout() {
+    this.adal.logOut();
+  }
+
 }
