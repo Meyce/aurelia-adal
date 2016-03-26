@@ -33,16 +33,14 @@ export class AdalConfig {
       // TODO: add options
 
       let authContext = this.adal.inject(configOptions);
-      
+
       window.AuthenticationContext = () => {
         return authContext; // this.adalAdapter.authContext
-      }
-      
+      };
+
       this.adalManager.initialize(authContext);
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
     }
   }
-
 }

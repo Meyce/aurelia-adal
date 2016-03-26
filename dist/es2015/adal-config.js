@@ -43,5 +43,4 @@ export let AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager), _dec(_cl
       console.log(e);
     }
   }
-
 }) || _class);

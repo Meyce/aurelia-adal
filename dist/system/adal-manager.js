@@ -1,7 +1,7 @@
 'use strict';
 
-System.register(['aurelia-dependency-injection'], function (_export, _context) {
-  var inject, AdalManager;
+System.register([], function (_export, _context) {
+  var AdalManager;
 
   function _asyncToGenerator(fn) {
     return function () {
@@ -39,9 +39,7 @@ System.register(['aurelia-dependency-injection'], function (_export, _context) {
   }
 
   return {
-    setters: [function (_aureliaDependencyInjection) {
-      inject = _aureliaDependencyInjection.default;
-    }],
+    setters: [],
     execute: function () {
       _export('AdalManager', AdalManager = function () {
         function AdalManager() {

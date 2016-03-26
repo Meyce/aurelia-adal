@@ -1,3 +1,13 @@
+### 0.2.1 (2016-03-26)
+
+
+#### Bug Fixes
+
+* forgot to build ([522131db](http://github.com/aurelia/skeleton-plugin/commit/522131db4ecce670b86e8c8b491e9ca50adb855b))
+* changed class name for authorize-step ([65b20678](http://github.com/aurelia/skeleton-plugin/commit/65b20678a3ec7698017945d470fe6173cc492966))
+* build project files ([070a8e1b](http://github.com/aurelia/skeleton-plugin/commit/070a8e1baff94d8fe2a624c671479ae3b1537b70))
+
+
 ### 1.0.0-beta.1.1.0 (2016-03-23)
 
 * Update to Babel 6
