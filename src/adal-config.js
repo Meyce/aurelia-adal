@@ -1,15 +1,13 @@
 ﻿import inject from 'aurelia-dependency-injection';
-import Platform from 'aurelia-pal';
 import * as Adal from 'adaljs';
 import AdalAdapter from './adal-adapter';
 import AdalManager from './adal-manager';
 
-@inject(Adal, AdalAdapter, AdalManager, Platform)
+@inject(Adal, AdalAdapter, AdalManager)
 export class AdalConfig {
 
-  constructor(adal, adalAdapter, adalManager, platform) {
+  constructor(adal, adalAdapter, adalManager) {
     this.adal = adal;
-    this.platform = platform; // all operations on pal are for adaljs internals
     this.adalAdapter = adalAdapter;
     this.adalManager = adalManager;
   }
@@ -19,8 +17,8 @@ export class AdalConfig {
       let configOptions = {};
 
       // redirect and logout_redirect are set to current location by default
-      let existingHash = this.platform.location.hash; // window.location.hash;
-      let pathDefault = this.platform.location.href; // window.location.href;
+      let existingHash = window.location.hash;
+      let pathDefault = window.location.href;
       if (existingHash) {
         pathDefault = pathDefault.replace(existingHash, '');
       }
@@ -36,7 +34,7 @@ export class AdalConfig {
 
       let authContext = this.adal.inject(configOptions);
       
-      /*window.AuthenticationContext*/ this.platform.global.AuthenticationContext = () => {
+      window.AuthenticationContext = () => {
         return authContext; // this.adalAdapter.authContext
       }
       

@@ -1,7 +1,5 @@
 ﻿import inject from 'aurelia-dependency-injection';
-import Platform from 'aurelia-pal';
 
-@inject(Platform)
 export class AdalManager {
 
   user = {
@@ -9,10 +7,6 @@ export class AdalManager {
     userName: '',
     loginError: '',
     profile: null
-  }
-
-  constructor(platform){
-    this.platform = platform; // all operations on pal are for adaljs internals
   }
 
   // TODO: move to constructor and rethink injection strategy (? factory)
@@ -39,9 +33,9 @@ export class AdalManager {
       this.adal.saveTokenFromHash(requestInfo);
 
       if (requestInfo.requestType !== this.adal.REQUEST_TYPE.LOGIN) {
-        this.adal.callback = this.platform.global.parent.AuthenticationContext().callback; //window.parent.AuthenticationContext().callback;
+        this.adal.callback = window.parent.AuthenticationContext().callback;
         if (requestInfo.requestType === this.adal.REQUEST_TYPE.RENEW_TOKEN) {
-          this.adal.callback = this.platform.global.parent.callBackMappedToRenewStates[requestInfo.stateResponse]; // window.parent.callBackMappedToRenewStates[requestInfo.stateResponse]; 
+          this.adal.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse]; 
         }
       }
 
@@ -90,7 +84,7 @@ export class AdalManager {
     } else {
       // directly start login flow
       this.adal._saveItem(this.adal.CONSTANTS.STORAGE.START_PAGE, path);
-      this.adal.info('Start login at:' + this.platform.location.href); // window.location.href);
+      this.adal.info('Start login at:' + window.location.href);
       // TODO: broadcast login redirect?
       this.adal.login();
       return handler();
