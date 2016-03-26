@@ -1,7 +1,7 @@
 'use strict';
 
-System.register(['aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './adal-adapter', './adal-manager'], function (_export, _context) {
-  var inject, Platform, Adal, AdalAdapter, AdalManager, _dec, _class, AdalConfig;
+System.register(['aurelia-dependency-injection', 'adaljs', './adal-adapter', './adal-manager'], function (_export, _context) {
+  var inject, Adal, AdalAdapter, AdalManager, _dec, _class, AdalConfig;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -12,8 +12,6 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './ada
   return {
     setters: [function (_aureliaDependencyInjection) {
       inject = _aureliaDependencyInjection.default;
-    }, function (_aureliaPal) {
-      Platform = _aureliaPal.default;
     }, function (_adaljs) {
       Adal = _adaljs;
     }, function (_adalAdapter) {
@@ -22,12 +20,11 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './ada
       AdalManager = _adalManager.default;
     }],
     execute: function () {
-      _export('AdalConfig', AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager, Platform), _dec(_class = function () {
-        function AdalConfig(adal, adalAdapter, adalManager, platform) {
+      _export('AdalConfig', AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager), _dec(_class = function () {
+        function AdalConfig(adal, adalAdapter, adalManager) {
           _classCallCheck(this, AdalConfig);
 
           this.adal = adal;
-          this.platform = platform;
           this.adalAdapter = adalAdapter;
           this.adalManager = adalManager;
         }
@@ -39,8 +36,8 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './ada
             (function () {
               var configOptions = {};
 
-              var existingHash = _this.platform.location.hash;
-              var pathDefault = _this.platform.location.href;
+              var existingHash = window.location.hash;
+              var pathDefault = window.location.href;
               if (existingHash) {
                 pathDefault = pathDefault.replace(existingHash, '');
               }
@@ -56,7 +53,7 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './ada
 
               var authContext = _this.adal.inject(configOptions);
 
-              _this.platform.global.AuthenticationContext = function () {
+              window.AuthenticationContext = function () {
                 return authContext;
               };
 

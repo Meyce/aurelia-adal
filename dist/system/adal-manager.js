@@ -1,7 +1,7 @@
 'use strict';
 
-System.register(['aurelia-dependency-injection', 'aurelia-pal'], function (_export, _context) {
-  var inject, Platform, _dec, _class, AdalManager;
+System.register(['aurelia-dependency-injection'], function (_export, _context) {
+  var inject, AdalManager;
 
   function _asyncToGenerator(fn) {
     return function () {
@@ -41,12 +41,10 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal'], function (_expo
   return {
     setters: [function (_aureliaDependencyInjection) {
       inject = _aureliaDependencyInjection.default;
-    }, function (_aureliaPal) {
-      Platform = _aureliaPal.default;
     }],
     execute: function () {
-      _export('AdalManager', AdalManager = (_dec = inject(Platform), _dec(_class = function () {
-        function AdalManager(platform) {
+      _export('AdalManager', AdalManager = function () {
+        function AdalManager() {
           _classCallCheck(this, AdalManager);
 
           this.user = {
@@ -55,8 +53,6 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal'], function (_expo
             loginError: '',
             profile: null
           };
-
-          this.platform = platform;
         }
 
         AdalManager.prototype.initialize = function initialize(authContext) {
@@ -82,9 +78,9 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal'], function (_expo
             this.adal.saveTokenFromHash(requestInfo);
 
             if (requestInfo.requestType !== this.adal.REQUEST_TYPE.LOGIN) {
-              this.adal.callback = this.platform.global.parent.AuthenticationContext().callback;
+              this.adal.callback = window.parent.AuthenticationContext().callback;
               if (requestInfo.requestType === this.adal.REQUEST_TYPE.RENEW_TOKEN) {
-                this.adal.callback = this.platform.global.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
+                this.adal.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
               }
             }
 
@@ -122,7 +118,8 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal'], function (_expo
             return redirectHandler(this.adal.config.localLoginUrl);
           } else {
             this.adal._saveItem(this.adal.CONSTANTS.STORAGE.START_PAGE, path);
-            this.adal.info('Start login at:' + this.platform.location.href);
+            this.adal.info('Start login at:' + window.location.href);
+
             this.adal.login();
             return handler();
           }
@@ -213,8 +210,12 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal'], function (_expo
           }
         };
 
+        AdalManager.prototype.logout = function logout() {
+          this.adal.logOut();
+        };
+
         return AdalManager;
-      }()) || _class));
+      }());
 
       _export('AdalManager', AdalManager);
     }

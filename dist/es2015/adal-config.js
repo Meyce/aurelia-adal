@@ -1,16 +1,14 @@
 var _dec, _class;
 
 import inject from 'aurelia-dependency-injection';
-import Platform from 'aurelia-pal';
 import * as Adal from 'adaljs';
 import AdalAdapter from './adal-adapter';
 import AdalManager from './adal-manager';
 
-export let AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager, Platform), _dec(_class = class AdalConfig {
+export let AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager), _dec(_class = class AdalConfig {
 
-  constructor(adal, adalAdapter, adalManager, platform) {
+  constructor(adal, adalAdapter, adalManager) {
     this.adal = adal;
-    this.platform = platform;
     this.adalAdapter = adalAdapter;
     this.adalManager = adalManager;
   }
@@ -19,8 +17,8 @@ export let AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager, Platform)
     try {
       let configOptions = {};
 
-      let existingHash = this.platform.location.hash;
-      let pathDefault = this.platform.location.href;
+      let existingHash = window.location.hash;
+      let pathDefault = window.location.href;
       if (existingHash) {
         pathDefault = pathDefault.replace(existingHash, '');
       }
@@ -36,7 +34,7 @@ export let AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager, Platform)
 
       let authContext = this.adal.inject(configOptions);
 
-      this.platform.global.AuthenticationContext = () => {
+      window.AuthenticationContext = () => {
         return authContext;
       };
 

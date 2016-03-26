@@ -11,10 +11,6 @@ var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
 
-var _aureliaPal = require('aurelia-pal');
-
-var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
-
 var _adaljs = require('adaljs');
 
 var Adal = _interopRequireWildcard(_adaljs);
@@ -33,12 +29,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalAdapter2.default, _adalManager2.default, _aureliaPal2.default), _dec(_class = function () {
-  function AdalConfig(adal, adalAdapter, adalManager, platform) {
+var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalAdapter2.default, _adalManager2.default), _dec(_class = function () {
+  function AdalConfig(adal, adalAdapter, adalManager) {
     _classCallCheck(this, AdalConfig);
 
     this.adal = adal;
-    this.platform = platform;
     this.adalAdapter = adalAdapter;
     this.adalManager = adalManager;
   }
@@ -50,8 +45,8 @@ var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.d
       (function () {
         var configOptions = {};
 
-        var existingHash = _this.platform.location.hash;
-        var pathDefault = _this.platform.location.href;
+        var existingHash = window.location.hash;
+        var pathDefault = window.location.href;
         if (existingHash) {
           pathDefault = pathDefault.replace(existingHash, '');
         }
@@ -67,7 +62,7 @@ var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.d
 
         var authContext = _this.adal.inject(configOptions);
 
-        _this.platform.global.AuthenticationContext = function () {
+        window.AuthenticationContext = function () {
           return authContext;
         };
 
