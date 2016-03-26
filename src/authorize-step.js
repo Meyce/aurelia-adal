@@ -3,7 +3,7 @@ import {Redirect} from 'aurelia-router';
 import {AdalManager} from './adal-manager';
 
 @inject(AdalManager)
-export class AureliaAdalAuthorizeStep {
+export class AuthorizeStep {
   
   constructor(adalManager) {
     this.adalManager = adalManager;
