@@ -4,7 +4,7 @@ import inject from 'aurelia-dependency-injection';
 import { Redirect } from 'aurelia-router';
 import { AdalManager } from './adal-manager';
 
-export let AureliaAdalAuthorizeStep = (_dec = inject(AdalManager), _dec(_class = class AureliaAdalAuthorizeStep {
+export let AuthorizeStep = (_dec = inject(AdalManager), _dec(_class = class AuthorizeStep {
 
   constructor(adalManager) {
     this.adalManager = adalManager;

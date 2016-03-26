@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AureliaAdalAuthorizeStep = undefined;
+exports.AuthorizeStep = undefined;
 
 var _dec, _class;
 
@@ -19,14 +19,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AureliaAdalAuthorizeStep = exports.AureliaAdalAuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_adalManager.AdalManager), _dec(_class = function () {
-  function AureliaAdalAuthorizeStep(adalManager) {
-    _classCallCheck(this, AureliaAdalAuthorizeStep);
+var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_adalManager.AdalManager), _dec(_class = function () {
+  function AuthorizeStep(adalManager) {
+    _classCallCheck(this, AuthorizeStep);
 
     this.adalManager = adalManager;
   }
 
-  AureliaAdalAuthorizeStep.prototype.run = function run(routingContext, next) {
+  AuthorizeStep.prototype.run = function run(routingContext, next) {
     var _this = this;
 
     var hash = window.location.hash;
@@ -58,5 +58,5 @@ var AureliaAdalAuthorizeStep = exports.AureliaAdalAuthorizeStep = (_dec = (0, _a
     });
   };
 
-  return AureliaAdalAuthorizeStep;
+  return AuthorizeStep;
 }()) || _class);

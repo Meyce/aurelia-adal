@@ -4,7 +4,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-router', './adal-man
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.AureliaAdalAuthorizeStep = undefined;
+  exports.AuthorizeStep = undefined;
 
   var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
 
@@ -22,14 +22,14 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-router', './adal-man
 
   var _dec, _class;
 
-  var AureliaAdalAuthorizeStep = exports.AureliaAdalAuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_adalManager.AdalManager), _dec(_class = function () {
-    function AureliaAdalAuthorizeStep(adalManager) {
-      _classCallCheck(this, AureliaAdalAuthorizeStep);
+  var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_adalManager.AdalManager), _dec(_class = function () {
+    function AuthorizeStep(adalManager) {
+      _classCallCheck(this, AuthorizeStep);
 
       this.adalManager = adalManager;
     }
 
-    AureliaAdalAuthorizeStep.prototype.run = function run(routingContext, next) {
+    AuthorizeStep.prototype.run = function run(routingContext, next) {
       var _this = this;
 
       var hash = window.location.hash;
@@ -61,6 +61,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-router', './adal-man
       });
     };
 
-    return AureliaAdalAuthorizeStep;
+    return AuthorizeStep;
   }()) || _class);
 });
