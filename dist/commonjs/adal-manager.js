@@ -5,15 +5,9 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.AdalManager = undefined;
 
-var _dec, _class;
-
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
-var _aureliaPal = require('aurelia-pal');
-
-var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21,8 +15,8 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AdalManager = exports.AdalManager = (_dec = (0, _aureliaDependencyInjection2.default)(_aureliaPal2.default), _dec(_class = function () {
-  function AdalManager(platform) {
+var AdalManager = exports.AdalManager = function () {
+  function AdalManager() {
     _classCallCheck(this, AdalManager);
 
     this.user = {
@@ -31,8 +25,6 @@ var AdalManager = exports.AdalManager = (_dec = (0, _aureliaDependencyInjection2
       loginError: '',
       profile: null
     };
-
-    this.platform = platform;
   }
 
   AdalManager.prototype.initialize = function initialize(authContext) {
@@ -58,9 +50,9 @@ var AdalManager = exports.AdalManager = (_dec = (0, _aureliaDependencyInjection2
       this.adal.saveTokenFromHash(requestInfo);
 
       if (requestInfo.requestType !== this.adal.REQUEST_TYPE.LOGIN) {
-        this.adal.callback = this.platform.global.parent.AuthenticationContext().callback;
+        this.adal.callback = window.parent.AuthenticationContext().callback;
         if (requestInfo.requestType === this.adal.REQUEST_TYPE.RENEW_TOKEN) {
-          this.adal.callback = this.platform.global.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
+          this.adal.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
         }
       }
 
@@ -98,7 +90,8 @@ var AdalManager = exports.AdalManager = (_dec = (0, _aureliaDependencyInjection2
       return redirectHandler(this.adal.config.localLoginUrl);
     } else {
       this.adal._saveItem(this.adal.CONSTANTS.STORAGE.START_PAGE, path);
-      this.adal.info('Start login at:' + this.platform.location.href);
+      this.adal.info('Start login at:' + window.location.href);
+
       this.adal.login();
       return handler();
     }
@@ -189,5 +182,9 @@ var AdalManager = exports.AdalManager = (_dec = (0, _aureliaDependencyInjection2
     }
   };
 
+  AdalManager.prototype.logout = function logout() {
+    this.adal.logOut();
+  };
+
   return AdalManager;
-}()) || _class);
+}();

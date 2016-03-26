@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './adal-adapter', './adal-manager'], function (exports, _aureliaDependencyInjection, _aureliaPal, _adaljs, _adalAdapter, _adalManager) {
+define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-adapter', './adal-manager'], function (exports, _aureliaDependencyInjection, _adaljs, _adalAdapter, _adalManager) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -7,8 +7,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './a
   exports.AdalConfig = undefined;
 
   var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
-  var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
 
   var Adal = _interopRequireWildcard(_adaljs);
 
@@ -47,12 +45,11 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './a
 
   var _dec, _class;
 
-  var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalAdapter2.default, _adalManager2.default, _aureliaPal2.default), _dec(_class = function () {
-    function AdalConfig(adal, adalAdapter, adalManager, platform) {
+  var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalAdapter2.default, _adalManager2.default), _dec(_class = function () {
+    function AdalConfig(adal, adalAdapter, adalManager) {
       _classCallCheck(this, AdalConfig);
 
       this.adal = adal;
-      this.platform = platform;
       this.adalAdapter = adalAdapter;
       this.adalManager = adalManager;
     }
@@ -64,8 +61,8 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './a
         (function () {
           var configOptions = {};
 
-          var existingHash = _this.platform.location.hash;
-          var pathDefault = _this.platform.location.href;
+          var existingHash = window.location.hash;
+          var pathDefault = window.location.href;
           if (existingHash) {
             pathDefault = pathDefault.replace(existingHash, '');
           }
@@ -81,7 +78,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'adaljs', './a
 
           var authContext = _this.adal.inject(configOptions);
 
-          _this.platform.global.AuthenticationContext = function () {
+          window.AuthenticationContext = function () {
             return authContext;
           };
 

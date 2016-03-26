@@ -1,21 +1,15 @@
-var _dec, _class;
-
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
 
 import inject from 'aurelia-dependency-injection';
-import Platform from 'aurelia-pal';
 
-export let AdalManager = (_dec = inject(Platform), _dec(_class = class AdalManager {
-
-  constructor(platform) {
+export let AdalManager = class AdalManager {
+  constructor() {
     this.user = {
       isAuthenticated: false,
       userName: '',
       loginError: '',
       profile: null
     };
-
-    this.platform = platform;
   }
 
   initialize(authContext) {
@@ -41,9 +35,9 @@ export let AdalManager = (_dec = inject(Platform), _dec(_class = class AdalManag
       this.adal.saveTokenFromHash(requestInfo);
 
       if (requestInfo.requestType !== this.adal.REQUEST_TYPE.LOGIN) {
-        this.adal.callback = this.platform.global.parent.AuthenticationContext().callback;
+        this.adal.callback = window.parent.AuthenticationContext().callback;
         if (requestInfo.requestType === this.adal.REQUEST_TYPE.RENEW_TOKEN) {
-          this.adal.callback = this.platform.global.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
+          this.adal.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
         }
       }
 
@@ -81,7 +75,8 @@ export let AdalManager = (_dec = inject(Platform), _dec(_class = class AdalManag
       return redirectHandler(this.adal.config.localLoginUrl);
     } else {
       this.adal._saveItem(this.adal.CONSTANTS.STORAGE.START_PAGE, path);
-      this.adal.info('Start login at:' + this.platform.location.href);
+      this.adal.info('Start login at:' + window.location.href);
+
       this.adal.login();
       return handler();
     }
@@ -133,4 +128,8 @@ export let AdalManager = (_dec = inject(Platform), _dec(_class = class AdalManag
     }
   }
 
-}) || _class);
+  logout() {
+    this.adal.logOut();
+  }
+
+};
