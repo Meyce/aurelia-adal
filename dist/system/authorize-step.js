@@ -1,7 +1,7 @@
 'use strict';
 
 System.register(['aurelia-dependency-injection', 'aurelia-router', './adal-manager'], function (_export, _context) {
-  var inject, Redirect, AdalManager, _dec, _class, AureliaAdalAuthorizeStep;
+  var inject, Redirect, AdalManager, _dec, _class, AuthorizeStep;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -18,14 +18,14 @@ System.register(['aurelia-dependency-injection', 'aurelia-router', './adal-manag
       AdalManager = _adalManager.AdalManager;
     }],
     execute: function () {
-      _export('AureliaAdalAuthorizeStep', AureliaAdalAuthorizeStep = (_dec = inject(AdalManager), _dec(_class = function () {
-        function AureliaAdalAuthorizeStep(adalManager) {
-          _classCallCheck(this, AureliaAdalAuthorizeStep);
+      _export('AuthorizeStep', AuthorizeStep = (_dec = inject(AdalManager), _dec(_class = function () {
+        function AuthorizeStep(adalManager) {
+          _classCallCheck(this, AuthorizeStep);
 
           this.adalManager = adalManager;
         }
 
-        AureliaAdalAuthorizeStep.prototype.run = function run(routingContext, next) {
+        AuthorizeStep.prototype.run = function run(routingContext, next) {
           var _this = this;
 
           var hash = window.location.hash;
@@ -57,10 +57,10 @@ System.register(['aurelia-dependency-injection', 'aurelia-router', './adal-manag
           });
         };
 
-        return AureliaAdalAuthorizeStep;
+        return AuthorizeStep;
       }()) || _class));
 
-      _export('AureliaAdalAuthorizeStep', AureliaAdalAuthorizeStep);
+      _export('AuthorizeStep', AuthorizeStep);
     }
   };
 });
