@@ -1,11 +1,11 @@
 {
-  "name": "aurelia-skeleton-plugin",
-  "version": "1.0.0-beta.1.1.0",
-  "description": "A starter kit for building an Aurelia plugin.",
+  "name": "aurelia-adal",
+  "version": "0.2.1",
+  "description": "Aurelia plugin for Azure AD authentication and authorization.",
   "keywords": [
     "aurelia",
     "plugin",
-    "skeleton"
+    "adal"
   ],
   "homepage": "http://aurelia.io",
   "bugs": {

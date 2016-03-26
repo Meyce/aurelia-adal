@@ -1,6 +1,4 @@
-﻿import inject from 'aurelia-dependency-injection';
-
-export class AdalManager {
+﻿export class AdalManager {
 
   user = {
     isAuthenticated: false,
@@ -29,7 +27,7 @@ export class AdalManager {
   hashHandler(hash, redirectHandler, isNotCallbackHandler, nextHandler) {
     if (this.adal.isCallback(hash)) {
       let requestInfo = this.adal.getRequestInfo(hash);
-      
+
       this.adal.saveTokenFromHash(requestInfo);
 
       if (requestInfo.requestType !== this.adal.REQUEST_TYPE.LOGIN) {
@@ -61,7 +59,7 @@ export class AdalManager {
             //IDtoken is added as token for the app
 
             // redirect to login requested page
-            var loginStartPage = this.adal._getItem(this.adal.CONSTANTS.STORAGE.START_PAGE);
+            let loginStartPage = this.adal._getItem(this.adal.CONSTANTS.STORAGE.START_PAGE);
             if (loginStartPage) {
               return redirectHandler(loginStartPage);
             }
@@ -130,7 +128,7 @@ export class AdalManager {
     this.adal.info('Getting error in the response');
 
     if (requestNotAuthorized) {
-      var resource = this.adal.getResourceForEndpoint(requestUrl);
+      let resource = this.adal.getResourceForEndpoint(requestUrl);
       this.adal.clearCacheForResource(resource);
       // TODO: broadcast notAuthorized?
     }

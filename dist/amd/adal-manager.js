@@ -1,18 +1,9 @@
-define(['exports', 'aurelia-dependency-injection'], function (exports, _aureliaDependencyInjection) {
+define(['exports'], function (exports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.AdalManager = undefined;
-
-  var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
 
   function _asyncToGenerator(fn) {
     return function () {
