@@ -2,14 +2,12 @@ var _dec, _class;
 
 import inject from 'aurelia-dependency-injection';
 import * as Adal from 'adaljs';
-import AdalAdapter from './adal-adapter';
 import AdalManager from './adal-manager';
 
-export let AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager), _dec(_class = class AdalConfig {
+export let AdalConfig = (_dec = inject(Adal, AdalManager), _dec(_class = class AdalConfig {
 
-  constructor(adal, adalAdapter, adalManager) {
+  constructor(adal, adalManager) {
     this.adal = adal;
-    this.adalAdapter = adalAdapter;
     this.adalManager = adalManager;
   }
 

@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-adapter', './adal-manager'], function (exports, _aureliaDependencyInjection, _adaljs, _adalAdapter, _adalManager) {
+define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-manager'], function (exports, _aureliaDependencyInjection, _adaljs, _adalManager) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -9,8 +9,6 @@ define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-adapter', '
   var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
 
   var Adal = _interopRequireWildcard(_adaljs);
-
-  var _adalAdapter2 = _interopRequireDefault(_adalAdapter);
 
   var _adalManager2 = _interopRequireDefault(_adalManager);
 
@@ -45,12 +43,11 @@ define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-adapter', '
 
   var _dec, _class;
 
-  var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalAdapter2.default, _adalManager2.default), _dec(_class = function () {
-    function AdalConfig(adal, adalAdapter, adalManager) {
+  var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalManager2.default), _dec(_class = function () {
+    function AdalConfig(adal, adalManager) {
       _classCallCheck(this, AdalConfig);
 
       this.adal = adal;
-      this.adalAdapter = adalAdapter;
       this.adalManager = adalManager;
     }
 
