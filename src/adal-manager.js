@@ -89,39 +89,45 @@
     }
   }
 
-  async loadTokenForRequest(requestUrl, onExistingTokenFound, onNewTokenAcquired) {
-    let resource = this.adal.getResourceForEndpoint(requestUrl);
-    if (resource == null) {
-      return;
-    }
+  loadTokenForRequest(requestUrl) {
+    return new Promise((resolve, reject) => {
 
-    let tokenStored = this.adal.getCachedToken(resource);
-    let isEndpoint = false;
-
-    if (tokenStored) {
-      this.adal.info('Token is avaliable for this url ' + requestUrl);
-
-      // check endpoint mapping if provided
-      onExistingTokenFound(tokenStored)//request.headers.append('Authorization', 'Bearer ' + tokenStored);
-    } else {
-      if (this.adal.config) {
-        isEndpoint = this.adal.config.endpoints.some(url => requestUrl.indexOf(url) > -1);
+      let resource = this.adal.getResourceForEndpoint(requestUrl);
+      if (resource == null) {
+        reject({ warning: 'no resource for endpoint'});
+        return;
       }
-              
+
+      let tokenStored = this.adal.getCachedToken(resource);
+      if (tokenStored) {
+        this.adal.info('Token is avaliable for this url ' + requestUrl);
+
+        // check endpoint mapping if provided
+        resolve({ token: tokenStored, fromCache: true });
+        return;
+      } 
+
       // Cancel request if login is starting
       if (this.adal.loginInProgress()) {
         this.adal.info('login already started.');
         
-        throw new Error('login already started');
-      } else if (this.adal.config && isEndpoint) {
+        reject({ warning: 'login already started'});
+        return;
+      } 
+      
+      let isEndpoint = this.adal.config && this.adal.config.endpoints.some(url => requestUrl.indexOf(url) > -1);
+      if (isEndpoint) {
         // external endpoints
         // delayed request to return after iframe completes
-        let token = await this.acquireToken(resource);
-
-        this.adal.verbose('Token is avaliable');
-        onNewTokenAcquired(token); // request.headers.set('Authorization', 'Bearer ' + token);
+        this.acquireToken(resource)
+          .then(token => {
+            this.adal.verbose('Token is avaliable');
+            resolve({ token: token, fromCache: false });
+          })
+          .catch(err => reject(err));
       }
-    }
+
+    });
   }
 
   handleRequestFailed(requestUrl, requestNotAuthorized) {
