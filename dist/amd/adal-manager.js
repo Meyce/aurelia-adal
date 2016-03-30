@@ -5,35 +5,6 @@ define(['exports'], function (exports) {
     value: true
   });
 
-  function _asyncToGenerator(fn) {
-    return function () {
-      var gen = fn.apply(this, arguments);
-      return new Promise(function (resolve, reject) {
-        function step(key, arg) {
-          try {
-            var info = gen[key](arg);
-            var value = info.value;
-          } catch (error) {
-            reject(error);
-            return;
-          }
-
-          if (info.done) {
-            resolve(value);
-          } else {
-            return Promise.resolve(value).then(function (value) {
-              return step("next", value);
-            }, function (err) {
-              return step("throw", err);
-            });
-          }
-        }
-
-        return step("next");
-      });
-    };
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -122,81 +93,45 @@ define(['exports'], function (exports) {
       }
     };
 
-    AdalManager.prototype.loadTokenForRequest = function () {
-      var ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(requestUrl, onExistingTokenFound, onNewTokenAcquired) {
-        var resource, tokenStored, isEndpoint, token;
-        return regeneratorRuntime.wrap(function _callee$(_context) {
-          while (1) {
-            switch (_context.prev = _context.next) {
-              case 0:
-                resource = this.adal.getResourceForEndpoint(requestUrl);
+    AdalManager.prototype.loadTokenForRequest = function loadTokenForRequest(requestUrl) {
+      var _this = this;
 
-                if (!(resource == null)) {
-                  _context.next = 3;
-                  break;
-                }
+      return new Promise(function (resolve, reject) {
 
-                return _context.abrupt('return');
+        var resource = _this.adal.getResourceForEndpoint(requestUrl);
+        if (resource == null) {
+          reject({ warning: 'no resource for endpoint' });
+          return;
+        }
 
-              case 3:
-                tokenStored = this.adal.getCachedToken(resource);
-                isEndpoint = false;
+        var tokenStored = _this.adal.getCachedToken(resource);
+        if (tokenStored) {
+          _this.adal.info('Token is avaliable for this url ' + requestUrl);
 
-                if (!tokenStored) {
-                  _context.next = 10;
-                  break;
-                }
+          resolve({ token: tokenStored, fromCache: true });
+          return;
+        }
 
-                this.adal.info('Token is avaliable for this url ' + requestUrl);
+        if (_this.adal.loginInProgress()) {
+          _this.adal.info('login already started.');
 
-                onExistingTokenFound(tokenStored);_context.next = 22;
-                break;
+          reject({ warning: 'login already started' });
+          return;
+        }
 
-              case 10:
-                if (this.adal.config) {
-                  isEndpoint = this.adal.config.endpoints.some(function (url) {
-                    return requestUrl.indexOf(url) > -1;
-                  });
-                }
-
-                if (!this.adal.loginInProgress()) {
-                  _context.next = 16;
-                  break;
-                }
-
-                this.adal.info('login already started.');
-
-                throw new Error('login already started');
-
-              case 16:
-                if (!(this.adal.config && isEndpoint)) {
-                  _context.next = 22;
-                  break;
-                }
-
-                _context.next = 19;
-                return this.acquireToken(resource);
-
-              case 19:
-                token = _context.sent;
-
-
-                this.adal.verbose('Token is avaliable');
-                onNewTokenAcquired(token);
-              case 22:
-              case 'end':
-                return _context.stop();
-            }
-          }
-        }, _callee, this);
-      }));
-
-      function loadTokenForRequest(_x, _x2, _x3) {
-        return ref.apply(this, arguments);
-      }
-
-      return loadTokenForRequest;
-    }();
+        var isEndpoint = _this.adal.config && _this.adal.config.endpoints.some(function (url) {
+          return requestUrl.indexOf(url) > -1;
+        });
+        if (isEndpoint) {
+          _this.acquireToken(resource).then(function (token) {
+            _this.adal.verbose('Token is avaliable');
+            resolve({ token: token, fromCache: false });
+          }).catch(function (err) {
+            return reject(err);
+          });
+        }
+      });
+    };
 
     AdalManager.prototype.handleRequestFailed = function handleRequestFailed(requestUrl, requestNotAuthorized) {
       this.adal.info('Getting error in the response');
@@ -208,10 +143,10 @@ define(['exports'], function (exports) {
     };
 
     AdalManager.prototype.acquireToken = function acquireToken(resource) {
-      var _this = this;
+      var _this2 = this;
 
       return new Promise(function (resolve, reject) {
-        _this.adal.acquireToken(resource, function (error, tokenOut) {
+        _this2.adal.acquireToken(resource, function (error, tokenOut) {
           if (error) {
             reject(error);
           } else {

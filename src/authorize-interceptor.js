@@ -8,14 +8,16 @@ export class AuthorizeInterceptor {
     this.adalManager = adalManager;
   }
 
-  async request(request) {
-    await this.adalManager.loadTokenForRequest(
-      request.url, 
-      token => request.headers.append('Authorization', 'Bearer ' + token),
-      token => request.headers.set('Authorization', 'Bearer ' + token)
-    );
-
-    return request;
+  request(request) {
+    return this.adalManager.loadTokenForRequest(request.url)
+      .then(tokenResult => {
+        if (tokenResult.fromCache) {
+          request.headers.append('Authorization', 'Bearer ' + tokenResult.token);
+        } else {
+          request.headers.set('Authorization', 'Bearer ' + tokenResult.token);
+        }
+      })
+      .then(request);
   }
 
   responseError(rejection) {

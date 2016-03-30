@@ -1,5 +1,3 @@
-function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { return step("next", value); }, function (err) { return step("throw", err); }); } } return step("next"); }); }; }
-
 export let AdalManager = class AdalManager {
   constructor() {
     this.user = {
@@ -80,41 +78,38 @@ export let AdalManager = class AdalManager {
     }
   }
 
-  loadTokenForRequest(requestUrl, onExistingTokenFound, onNewTokenAcquired) {
-    var _this = this;
+  loadTokenForRequest(requestUrl) {
+    return new Promise((resolve, reject) => {
 
-    return _asyncToGenerator(function* () {
-      let resource = _this.adal.getResourceForEndpoint(requestUrl);
+      let resource = this.adal.getResourceForEndpoint(requestUrl);
       if (resource == null) {
+        reject({ warning: 'no resource for endpoint' });
         return;
       }
 
-      let tokenStored = _this.adal.getCachedToken(resource);
-      let isEndpoint = false;
-
+      let tokenStored = this.adal.getCachedToken(resource);
       if (tokenStored) {
-        _this.adal.info('Token is avaliable for this url ' + requestUrl);
+        this.adal.info('Token is avaliable for this url ' + requestUrl);
 
-        onExistingTokenFound(tokenStored);
-      } else {
-          if (_this.adal.config) {
-            isEndpoint = _this.adal.config.endpoints.some(function (url) {
-              return requestUrl.indexOf(url) > -1;
-            });
-          }
+        resolve({ token: tokenStored, fromCache: true });
+        return;
+      }
 
-          if (_this.adal.loginInProgress()) {
-            _this.adal.info('login already started.');
+      if (this.adal.loginInProgress()) {
+        this.adal.info('login already started.');
 
-            throw new Error('login already started');
-          } else if (_this.adal.config && isEndpoint) {
-            let token = yield _this.acquireToken(resource);
+        reject({ warning: 'login already started' });
+        return;
+      }
 
-            _this.adal.verbose('Token is avaliable');
-            onNewTokenAcquired(token);
-          }
-        }
-    })();
+      let isEndpoint = this.adal.config && this.adal.config.endpoints.some(url => requestUrl.indexOf(url) > -1);
+      if (isEndpoint) {
+        this.acquireToken(resource).then(token => {
+          this.adal.verbose('Token is avaliable');
+          resolve({ token: token, fromCache: false });
+        }).catch(err => reject(err));
+      }
+    });
   }
 
   handleRequestFailed(requestUrl, requestNotAuthorized) {

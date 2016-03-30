@@ -12,8 +12,8 @@ export class AuthService {
     this.adal.logOut();
   }
 
-  async getUser() {
-    return await new Promise((resolve, reject) => {
+  getUserAsync() {
+    return new Promise((resolve, reject) => {
       this.adal.getUser((error, user) => {
         if (error) {
           reject(error);
