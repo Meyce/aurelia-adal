@@ -24,7 +24,7 @@ Object.defineProperty(exports, 'AuthorizeInterceptor', {
 });
 exports.configure = configure;
 
-var _adalConfig = require('adal-config');
+var _adalConfig = require('./adal-config');
 
 require('./auth-filter');
 

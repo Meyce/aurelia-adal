@@ -1,4 +1,4 @@
-define(['exports', './authorize-step', './authorize-interceptor', 'adal-config', './auth-filter'], function (exports, _authorizeStep, _authorizeInterceptor, _adalConfig) {
+define(['exports', './authorize-step', './authorize-interceptor', './adal-config', './auth-filter'], function (exports, _authorizeStep, _authorizeInterceptor, _adalConfig) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {

@@ -1,7 +1,7 @@
 'use strict';
 
-System.register(['aurelia-dependency-injection', 'adaljs', './adal-adapter', './adal-manager'], function (_export, _context) {
-  var inject, Adal, AdalAdapter, AdalManager, _dec, _class, AdalConfig;
+System.register(['aurelia-dependency-injection', 'adaljs', './adal-manager'], function (_export, _context) {
+  var inject, Adal, AdalManager, _dec, _class, AdalConfig;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -14,18 +14,15 @@ System.register(['aurelia-dependency-injection', 'adaljs', './adal-adapter', './
       inject = _aureliaDependencyInjection.default;
     }, function (_adaljs) {
       Adal = _adaljs;
-    }, function (_adalAdapter) {
-      AdalAdapter = _adalAdapter.default;
     }, function (_adalManager) {
       AdalManager = _adalManager.default;
     }],
     execute: function () {
-      _export('AdalConfig', AdalConfig = (_dec = inject(Adal, AdalAdapter, AdalManager), _dec(_class = function () {
-        function AdalConfig(adal, adalAdapter, adalManager) {
+      _export('AdalConfig', AdalConfig = (_dec = inject(Adal, AdalManager), _dec(_class = function () {
+        function AdalConfig(adal, adalManager) {
           _classCallCheck(this, AdalConfig);
 
           this.adal = adal;
-          this.adalAdapter = adalAdapter;
           this.adalManager = adalManager;
         }
 

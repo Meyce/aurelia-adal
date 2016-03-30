@@ -15,10 +15,6 @@ var _adaljs = require('adaljs');
 
 var Adal = _interopRequireWildcard(_adaljs);
 
-var _adalAdapter = require('./adal-adapter');
-
-var _adalAdapter2 = _interopRequireDefault(_adalAdapter);
-
 var _adalManager = require('./adal-manager');
 
 var _adalManager2 = _interopRequireDefault(_adalManager);
@@ -29,12 +25,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalAdapter2.default, _adalManager2.default), _dec(_class = function () {
-  function AdalConfig(adal, adalAdapter, adalManager) {
+var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalManager2.default), _dec(_class = function () {
+  function AdalConfig(adal, adalManager) {
     _classCallCheck(this, AdalConfig);
 
     this.adal = adal;
-    this.adalAdapter = adalAdapter;
     this.adalManager = adalManager;
   }
 

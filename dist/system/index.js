@@ -1,6 +1,6 @@
 'use strict';
 
-System.register(['adal-config', './auth-filter', './authorize-step', './authorize-interceptor'], function (_export, _context) {
+System.register(['./adal-config', './auth-filter', './authorize-step', './authorize-interceptor'], function (_export, _context) {
   var AdalConfig;
   return {
     setters: [function (_adalConfig) {

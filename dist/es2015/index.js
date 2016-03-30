@@ -1,4 +1,4 @@
-import { AdalConfig } from 'adal-config';
+import { AdalConfig } from './adal-config';
 import './auth-filter';
 export { AuthorizeStep } from './authorize-step';
 export { AuthorizeInterceptor } from './authorize-interceptor';

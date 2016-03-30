@@ -1,6 +1,6 @@
 {
   "name": "aurelia-adal",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Aurelia plugin for Azure AD authentication and authorization.",
   "keywords": [
     "aurelia",

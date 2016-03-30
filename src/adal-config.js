@@ -1,14 +1,12 @@
 ﻿import inject from 'aurelia-dependency-injection';
 import * as Adal from 'adaljs';
-import AdalAdapter from './adal-adapter';
 import AdalManager from './adal-manager';
 
-@inject(Adal, AdalAdapter, AdalManager)
+@inject(Adal, AdalManager)
 export class AdalConfig {
 
-  constructor(adal, adalAdapter, adalManager) {
+  constructor(adal, adalManager) {
     this.adal = adal;
-    this.adalAdapter = adalAdapter;
     this.adalManager = adalManager;
   }
 
@@ -35,7 +33,7 @@ export class AdalConfig {
       let authContext = this.adal.inject(configOptions);
 
       window.AuthenticationContext = () => {
-        return authContext; // this.adalAdapter.authContext
+        return authContext; 
       };
 
       this.adalManager.initialize(authContext);
