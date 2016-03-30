@@ -143,7 +143,7 @@ var AdalManager = exports.AdalManager = function () {
               }
 
               _context.next = 19;
-              return this.adal.acquireToken(resource);
+              return this.acquireToken(resource);
 
             case 19:
               token = _context.sent;
@@ -175,8 +175,18 @@ var AdalManager = exports.AdalManager = function () {
     }
   };
 
-  AdalManager.prototype.logout = function logout() {
-    this.adal.logOut();
+  AdalManager.prototype.acquireToken = function acquireToken(resource) {
+    var _this = this;
+
+    return new Promise(function (resolve, reject) {
+      _this.adal.acquireToken(resource, function (error, tokenOut) {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(tokenOut);
+        }
+      });
+    });
   };
 
   return AdalManager;

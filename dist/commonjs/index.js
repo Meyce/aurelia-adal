@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AuthorizeInterceptor = exports.AuthorizeStep = undefined;
+exports.AuthService = exports.AuthorizeInterceptor = exports.AuthorizeStep = undefined;
 
 var _authorizeStep = require('./authorize-step');
 
@@ -20,6 +20,15 @@ Object.defineProperty(exports, 'AuthorizeInterceptor', {
   enumerable: true,
   get: function get() {
     return _authorizeInterceptor.AuthorizeInterceptor;
+  }
+});
+
+var _authService = require('./auth-service');
+
+Object.defineProperty(exports, 'AuthService', {
+  enumerable: true,
+  get: function get() {
+    return _authService.AuthService;
   }
 });
 exports.configure = configure;

@@ -116,7 +116,7 @@
       } else if (this.adal.config && isEndpoint) {
         // external endpoints
         // delayed request to return after iframe completes
-        let token = await this.adal.acquireToken(resource);
+        let token = await this.acquireToken(resource);
 
         this.adal.verbose('Token is avaliable');
         onNewTokenAcquired(token); // request.headers.set('Authorization', 'Bearer ' + token);
@@ -134,8 +134,19 @@
     }
   }
 
-  logout() {
-    this.adal.logOut();
+  acquireToken(resource) {
+    // automated token request call
+    return new Promise((resolve, reject) => {
+      this.adal.acquireToken(resource, (error, tokenOut) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(tokenOut);
+        }
+      });
+    });
   }
+
+  
 
 }
