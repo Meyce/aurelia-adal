@@ -1,6 +1,6 @@
 'use strict';
 
-System.register(['./adal-config', './auth-filter', './authorize-step', './authorize-interceptor'], function (_export, _context) {
+System.register(['./adal-config', './auth-filter', './authorize-step', './authorize-interceptor', './auth-service'], function (_export, _context) {
   var AdalConfig;
   return {
     setters: [function (_adalConfig) {
@@ -15,6 +15,11 @@ System.register(['./adal-config', './auth-filter', './authorize-step', './author
       _exportObj2.AuthorizeInterceptor = _authorizeInterceptor.AuthorizeInterceptor;
 
       _export(_exportObj2);
+    }, function (_authService) {
+      var _exportObj3 = {};
+      _exportObj3.AuthService = _authService.AuthService;
+
+      _export(_exportObj3);
     }],
     execute: function () {
       function configure(aurelia, settings) {

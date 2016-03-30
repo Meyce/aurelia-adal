@@ -108,7 +108,7 @@ export let AdalManager = class AdalManager {
 
             throw new Error('login already started');
           } else if (_this.adal.config && isEndpoint) {
-            let token = yield _this.adal.acquireToken(resource);
+            let token = yield _this.acquireToken(resource);
 
             _this.adal.verbose('Token is avaliable');
             onNewTokenAcquired(token);
@@ -126,8 +126,16 @@ export let AdalManager = class AdalManager {
     }
   }
 
-  logout() {
-    this.adal.logOut();
+  acquireToken(resource) {
+    return new Promise((resolve, reject) => {
+      this.adal.acquireToken(resource, (error, tokenOut) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(tokenOut);
+        }
+      });
+    });
   }
 
 };

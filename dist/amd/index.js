@@ -1,10 +1,10 @@
-define(['exports', './authorize-step', './authorize-interceptor', './adal-config', './auth-filter'], function (exports, _authorizeStep, _authorizeInterceptor, _adalConfig) {
+define(['exports', './authorize-step', './authorize-interceptor', './auth-service', './adal-config', './auth-filter'], function (exports, _authorizeStep, _authorizeInterceptor, _authService, _adalConfig) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.AuthorizeInterceptor = exports.AuthorizeStep = undefined;
+  exports.AuthService = exports.AuthorizeInterceptor = exports.AuthorizeStep = undefined;
   Object.defineProperty(exports, 'AuthorizeStep', {
     enumerable: true,
     get: function () {
@@ -15,6 +15,12 @@ define(['exports', './authorize-step', './authorize-interceptor', './adal-config
     enumerable: true,
     get: function () {
       return _authorizeInterceptor.AuthorizeInterceptor;
+    }
+  });
+  Object.defineProperty(exports, 'AuthService', {
+    enumerable: true,
+    get: function () {
+      return _authService.AuthService;
     }
   });
   exports.configure = configure;
