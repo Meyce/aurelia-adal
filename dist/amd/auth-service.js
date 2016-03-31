@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-dependency-injection', './adal-manager'], function (exports, _aureliaDependencyInjection, _adalManager) {
+define(['exports', 'aurelia-dependency-injection', './auth-context'], function (exports, _aureliaDependencyInjection, _authContext) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -22,22 +22,22 @@ define(['exports', 'aurelia-dependency-injection', './adal-manager'], function (
 
   var _dec, _class;
 
-  var AuthService = exports.AuthService = (_dec = (0, _aureliaDependencyInjection2.default)(_adalManager.AdalManager), _dec(_class = function () {
-    function AuthService(adalManager) {
+  var AuthService = exports.AuthService = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
+    function AuthService(authContext) {
       _classCallCheck(this, AuthService);
 
-      this.adalManager = adalManager;
+      this.authContext = authContext;
     }
 
     AuthService.prototype.logout = function logout() {
-      this.adalManager.adal.logOut();
+      this.authContext.adal.logOut();
     };
 
     AuthService.prototype.getUserAsync = function getUserAsync() {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
-        _this.adalManager.adal.getUser(function (error, user) {
+        _this.authContext.adal.getUser(function (error, user) {
           if (error) {
             reject(error);
           } else {

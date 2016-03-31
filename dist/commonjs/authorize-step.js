@@ -11,51 +11,104 @@ var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
 
+var _aureliaPal = require('aurelia-pal');
+
+var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
+
 var _aureliaRouter = require('aurelia-router');
 
-var _adalManager = require('./adal-manager');
+var _aureliaLogging = require('aurelia-logging');
+
+var Logging = _interopRequireWildcard(_aureliaLogging);
+
+var _authContext = require('./auth-context');
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_adalManager.AdalManager), _dec(_class = function () {
-  function AuthorizeStep(adalManager) {
+var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
+  function AuthorizeStep(authContext) {
     _classCallCheck(this, AuthorizeStep);
 
-    this.adalManager = adalManager;
+    this.logger = Logging.getLogger('adal');
+
+    this.authContext = authContext;
   }
 
   AuthorizeStep.prototype.run = function run(routingContext, next) {
-    var _this = this;
+    var hash = _aureliaPal2.default.location.hash;
 
-    var hash = window.location.hash;
+    var isCallback = this.authContext.adal.isCallback(hash);
 
-    return this.adalManager.hashHandler(hash, function (url) {
-      return next.cancel(new _aureliaRouter.Redirect(url));
-    }, function () {
-      var loginRoute = '';
-      var routes = routingContext.getAllInstructions();
-      var isAuthenticated = _this.adalManager.user.isAuthenticated;
+    if (isCallback) {
+      var requestInfo = this.authContext.adal.getRequestInfo(hash);
 
-      if (routes.some(function (i) {
-        return !!i.config.auth;
-      }) && !isAuthenticated) {
-        return _this.adalManager.loginHandler(routingContext.fragment, function (url) {
-          return next.cancel(new _aureliaRouter.Redirect(url));
-        }, function () {
-          return next.cancel('login redirect');
-        });
-      } else if (routes.some(function (i) {
-        return i.fragment == loginRoute;
-      }) && isAuthenticated) {
-        return next.cancel(new _aureliaRouter.Redirect(''));
+      this.authContext.adal.saveTokenFromHash(requestInfo);
+
+      if (requestInfo.requestType !== this.authContext.adal.REQUEST_TYPE.LOGIN) {
+        this.authContext.adal.callback = window.parent.AuthenticationContext().callback;
+        if (requestInfo.requestType === this.authContext.adal.REQUEST_TYPE.RENEW_TOKEN) {
+          this.authContext.adal.callback = window.parent.callBackMappedToRenewStates[requestInfo.stateResponse];
+        }
       }
 
+      if (requestInfo.stateMatch) {
+        if (typeof this.authContext.adal.callback === 'function') {
+          if (requestInfo.requestType === this.authContext.adal.REQUEST_TYPE.RENEW_TOKEN) {
+            if (requestInfo.parameters['access_token']) {
+              this.authContext.adal.callback(this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters['access_token']);
+              return next();
+            } else if (requestInfo.parameters['id_token']) {
+              this.authContext.adal.callback(this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.ERROR_DESCRIPTION), requestInfo.parameters['id_token']);
+              return next();
+            }
+          }
+        } else {
+          this.authContext.updateUserFromCache();
+
+          if (this.authContext.user.userName) {
+            var startPage = this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.START_PAGE);
+            if (startPage) {
+              return next.cancel(new _aureliaRouter.Redirect(startPage));
+            }
+            this.logger.info('user successfully logged in');
+          } else {
+            this.logger.warn('user not logged in, reason: ' + this.authContext.user.loginError);
+            this.logger.warn('user not logged in, reason: ' + this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.ERROR_DESCRIPTION));
+          }
+        }
+      }
+    } else {
+
+      if (!this.authContext.user.isAuthenticated) {
+        if (!!routingContext.config.auth) {
+
+          if (this.authContext.adal.config && this.authContext.adal.config.localLoginUrl) {
+            return next.cancel(new _aureliaRouter.Redirect(this.authContext.adal.config.localLoginUrl));
+          } else {
+            this.authContext.adal._saveItem(this.authContext.adal.CONSTANTS.STORAGE.START_PAGE, routingContext.fragment);
+
+            this.logger.info('login started; redirecting to Azure.');
+            this.authContext.adal.login();
+            this.logger.info('login finished');
+
+            return next.cancel('login redirect');
+          }
+        }
+      } else {
+          if (!!routingContext.config.login) {
+            this.logger.warn('user already logged in. redirecting...');
+            var _startPage = this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.START_PAGE);
+
+            return next.cancel(new _aureliaRouter.Redirect(_startPage));
+          }
+        }
+
       return next();
-    }, function () {
-      return next();
-    });
+    }
   };
 
   return AuthorizeStep;

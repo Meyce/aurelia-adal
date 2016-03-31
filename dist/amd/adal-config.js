@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-manager'], function (exports, _aureliaDependencyInjection, _adaljs, _adalManager) {
+define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-logging', 'adaljs', './auth-context'], function (exports, _aureliaDependencyInjection, _aureliaPal, _aureliaLogging, _adaljs, _authContext) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -8,9 +8,13 @@ define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-manager'], 
 
   var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
 
+  var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
+
+  var Logging = _interopRequireWildcard(_aureliaLogging);
+
   var Adal = _interopRequireWildcard(_adaljs);
 
-  var _adalManager2 = _interopRequireDefault(_adalManager);
+  var _authContext2 = _interopRequireDefault(_authContext);
 
   function _interopRequireWildcard(obj) {
     if (obj && obj.__esModule) {
@@ -43,45 +47,52 @@ define(['exports', 'aurelia-dependency-injection', 'adaljs', './adal-manager'], 
 
   var _dec, _class;
 
-  var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _adalManager2.default), _dec(_class = function () {
-    function AdalConfig(adal, adalManager) {
+  var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _authContext2.default), _dec(_class = function () {
+    function AdalConfig(adal, authContext) {
       _classCallCheck(this, AdalConfig);
 
+      this.logger = Logging.getLogger('adal');
+
       this.adal = adal;
-      this.adalManager = adalManager;
+      this.authContext = authContext;
     }
 
-    AdalConfig.prototype.configure = function configure(settings) {
+    AdalConfig.prototype.configure = function configure(config) {
       var _this = this;
 
       try {
-        (function () {
-          var configOptions = {};
+        var settings = {};
 
-          var existingHash = window.location.hash;
-          var pathDefault = window.location.href;
-          if (existingHash) {
-            pathDefault = pathDefault.replace(existingHash, '');
-          }
+        var existingHash = _aureliaPal2.default.location.hash;
+        var pathDefault = _aureliaPal2.default.location.href;
+        if (existingHash) {
+          pathDefault = pathDefault.replace(existingHash, '');
+        }
 
-          settings = settings || {};
+        config = config || {};
 
-          configOptions.tenant = settings.tenant;
-          configOptions.clientId = settings.clientId;
-          configOptions.endpoints = settings.endpoints;
-          configOptions.redirectUri = settings.redirectUri || pathDefault;
-          configOptions.postLogoutRedirectUri = settings.postLogoutRedirectUri || pathDefault;
+        settings.tenant = config.tenant;
+        settings.clientId = config.clientId;
+        settings.endpoints = config.endpoints;
+        settings.localLoginUrl = config.localLoginUrl;
+        settings.redirectUri = config.redirectUri || pathDefault;
+        settings.postLogoutRedirectUri = config.postLogoutRedirectUri || pathDefault;
 
 
-          var authContext = _this.adal.inject(configOptions);
+        var adalContext = this.adal.inject(settings);
+        this.logger.info('AdalContext created');
+        this.logger.debug(adalContext);
 
-          window.AuthenticationContext = function () {
-            return authContext;
-          };
+        this.authContext.initialize(adalContext);
 
-          _this.adalManager.initialize(authContext);
-        })();
+        window.AuthenticationContext = function () {
+          return _this.authContext.adal;
+        };
+
+        this.logger.info('aurelia-adal configured');
       } catch (e) {
+        this.logger.error('aurelia-adal configuration failed:');
+        this.logger.error(e);
         console.log(e);
       }
     };
