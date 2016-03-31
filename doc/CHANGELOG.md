@@ -1,3 +1,14 @@
+### 0.3.1 (2016-03-31)
+
+
+#### Bug Fixes
+
+* added logging dependency ([cba52d6b](http://github.com/aurelia/skeleton-plugin/commit/cba52d6b6fb3ff1807ecc57a7829b40ae36dc079))
+* forgot to build ([522131db](http://github.com/aurelia/skeleton-plugin/commit/522131db4ecce670b86e8c8b491e9ca50adb855b))
+* changed class name for authorize-step ([65b20678](http://github.com/aurelia/skeleton-plugin/commit/65b20678a3ec7698017945d470fe6173cc492966))
+* build project files ([070a8e1b](http://github.com/aurelia/skeleton-plugin/commit/070a8e1baff94d8fe2a624c671479ae3b1537b70))
+
+
 ### 0.3.0 (2016-03-31)
 
 
