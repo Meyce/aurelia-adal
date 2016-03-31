@@ -1,4 +1,4 @@
-define(['exports', 'aurelia-dependency-injection', './auth-context'], function (exports, _aureliaDependencyInjection, _authContext) {
+define(['exports', 'aurelia-dependency-injection', 'aurelia-logging', './auth-context'], function (exports, _aureliaDependencyInjection, _aureliaLogging, _authContext) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -7,6 +7,25 @@ define(['exports', 'aurelia-dependency-injection', './auth-context'], function (
   exports.AuthorizeInterceptor = undefined;
 
   var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
+
+  var Logging = _interopRequireWildcard(_aureliaLogging);
+
+  function _interopRequireWildcard(obj) {
+    if (obj && obj.__esModule) {
+      return obj;
+    } else {
+      var newObj = {};
+
+      if (obj != null) {
+        for (var key in obj) {
+          if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
+        }
+      }
+
+      newObj.default = obj;
+      return newObj;
+    }
+  }
 
   function _interopRequireDefault(obj) {
     return obj && obj.__esModule ? obj : {
@@ -25,6 +44,8 @@ define(['exports', 'aurelia-dependency-injection', './auth-context'], function (
   var AuthorizeInterceptor = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
     function AuthorizeInterceptor(authContext) {
       _classCallCheck(this, AuthorizeInterceptor);
+
+      this.logger = Logging.getLogger('adal');
 
       this.authContext = authContext;
     }

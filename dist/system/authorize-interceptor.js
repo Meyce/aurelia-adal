@@ -1,7 +1,7 @@
 'use strict';
 
-System.register(['aurelia-dependency-injection', './auth-context'], function (_export, _context) {
-  var inject, AuthContext, _dec, _class, AuthorizeInterceptor;
+System.register(['aurelia-dependency-injection', 'aurelia-logging', './auth-context'], function (_export, _context) {
+  var inject, Logging, AuthContext, _dec, _class, AuthorizeInterceptor;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -12,6 +12,8 @@ System.register(['aurelia-dependency-injection', './auth-context'], function (_e
   return {
     setters: [function (_aureliaDependencyInjection) {
       inject = _aureliaDependencyInjection.default;
+    }, function (_aureliaLogging) {
+      Logging = _aureliaLogging;
     }, function (_authContext) {
       AuthContext = _authContext.AuthContext;
     }],
@@ -19,6 +21,8 @@ System.register(['aurelia-dependency-injection', './auth-context'], function (_e
       _export('AuthorizeInterceptor', AuthorizeInterceptor = (_dec = inject(AuthContext), _dec(_class = function () {
         function AuthorizeInterceptor(authContext) {
           _classCallCheck(this, AuthorizeInterceptor);
+
+          this.logger = Logging.getLogger('adal');
 
           this.authContext = authContext;
         }
