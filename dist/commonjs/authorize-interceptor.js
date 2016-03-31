@@ -11,32 +11,77 @@ var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
 var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
 
-var _adalManager = require('./adal-manager');
+var _authContext = require('./auth-context');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AuthorizeInterceptor = (_dec = (0, _aureliaDependencyInjection2.default)(_adalManager.AdalManager), _dec(_class = function () {
-  function AuthorizeInterceptor(adalManager) {
+var AuthorizeInterceptor = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
+  function AuthorizeInterceptor(authContext) {
     _classCallCheck(this, AuthorizeInterceptor);
 
-    this.adalManager = adalManager;
+    this.authContext = authContext;
   }
 
   AuthorizeInterceptor.prototype.request = function request(_request) {
-    return this.adalManager.loadTokenForRequest(_request.url).then(function (tokenResult) {
-      if (tokenResult.fromCache) {
-        _request.headers.append('Authorization', 'Bearer ' + tokenResult.token);
-      } else {
-        _request.headers.set('Authorization', 'Bearer ' + tokenResult.token);
-      }
-    }).then(_request);
+    var _this = this;
+
+    var resource = this.authContext.adal.getResourceForEndpoint(_request.url);
+    if (resource == null) {
+      return Promise.resolve(_request);
+    }
+    this.logger.debug('retrieved resource for endpoint "' + _request.url + '":');
+    this.logger.debug(resource);
+
+    var tokenStored = this.authContext.adal.getCachedToken(resource);
+    if (tokenStored) {
+      this.logger.debug('retrieved token for resource:');
+      this.logger.debug(tokenStored);
+
+      _request.headers.append('Authorization', 'Bearer ' + tokenStored);
+
+      return Promise.resolve(_request);
+    }
+
+    if (this.authContext.adal.loginInProgress()) {
+      this.logger.warn('login already started.');
+
+      return Promise.reject('login already started');
+    }
+
+    var isEndpoint = this.authContext.adal.config && Object.keys(this.authContext.adal.config.endpoints).some(function (endpointUrl) {
+      return _request.url.indexOf(endpointUrl) > -1;
+    });
+    if (isEndpoint) {
+      return new Promise(function (resolve, reject) {
+        _this.logger.info('acquiring token...');
+        _this.authContext.adal.acquireToken(resource, function (error, token) {
+          if (error) {
+            _this.logger.error('acquiring token failed');
+            reject(error);
+          } else {
+            _this.logger.info('token acquired');
+            _this.logger.debug(token);
+            _request.headers.set('Authorization', 'Bearer ' + token);
+            resolve(_request);
+          }
+        });
+      });
+    } else {
+      return Promise.resolve(_request);
+    }
   };
 
   AuthorizeInterceptor.prototype.responseError = function responseError(rejection) {
     var notAuthorized = rejection && rejection.status === 401;
-    this.adalManager.handleRequestFailed(rejection.config.url, notAuthorized);
+
+    if (notAuthorized) {
+      this.logger.warn('Not authorized');
+
+      var resource = this.authContext.adal.getResourceForEndpoint(rejection.config.url);
+      this.authContext.adal.clearCacheForResource(resource);
+    }
 
     return rejection;
   };

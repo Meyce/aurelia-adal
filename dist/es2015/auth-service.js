@@ -1,21 +1,21 @@
 var _dec, _class;
 
 import inject from 'aurelia-dependency-injection';
-import { AdalManager } from './adal-manager';
+import { AuthContext } from './auth-context';
 
-export let AuthService = (_dec = inject(AdalManager), _dec(_class = class AuthService {
+export let AuthService = (_dec = inject(AuthContext), _dec(_class = class AuthService {
 
-  constructor(adalManager) {
-    this.adalManager = adalManager;
+  constructor(authContext) {
+    this.authContext = authContext;
   }
 
   logout() {
-    this.adalManager.adal.logOut();
+    this.authContext.adal.logOut();
   }
 
   getUserAsync() {
     return new Promise((resolve, reject) => {
-      this.adalManager.adal.getUser((error, user) => {
+      this.authContext.adal.getUser((error, user) => {
         if (error) {
           reject(error);
         } else {
