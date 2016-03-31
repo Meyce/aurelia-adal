@@ -1,9 +1,12 @@
 ﻿import inject from 'aurelia-dependency-injection';
+import * as Logging from 'aurelia-logging';
 import {AuthContext} from './auth-context';
 
 @inject(AuthContext)
 export class AuthorizeInterceptor {
 
+  logger = Logging.getLogger('adal');
+  
   constructor(authContext) {
     this.authContext = authContext;
   }
