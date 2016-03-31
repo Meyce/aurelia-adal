@@ -43,7 +43,7 @@ System.register(['aurelia-dependency-injection', 'aurelia-router', './adal-manag
               return _this.adalManager.loginHandler(routingContext.fragment, function (url) {
                 return next.cancel(new Redirect(url));
               }, function () {
-                return next.cancel(new Redirect('login redirect'));
+                return next.cancel('login redirect');
               });
             } else if (routes.some(function (i) {
               return i.fragment == loginRoute;

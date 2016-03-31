@@ -47,7 +47,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-router', './adal-man
           return _this.adalManager.loginHandler(routingContext.fragment, function (url) {
             return next.cancel(new _aureliaRouter.Redirect(url));
           }, function () {
-            return next.cancel(new _aureliaRouter.Redirect('login redirect'));
+            return next.cancel('login redirect');
           });
         } else if (routes.some(function (i) {
           return i.fragment == loginRoute;

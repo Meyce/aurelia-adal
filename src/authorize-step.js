@@ -25,7 +25,7 @@ export class AuthorizeStep {
           return this.adalManager.loginHandler(
             routingContext.fragment, 
             url => next.cancel(new Redirect(url)), 
-            () => next.cancel(new Redirect('login redirect'))
+            () => next.cancel('login redirect')
           );
         } else if (routes.some(i => i.fragment == loginRoute) && isAuthenticated) {
           // Logged in, current route is the login route

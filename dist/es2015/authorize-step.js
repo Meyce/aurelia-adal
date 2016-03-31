@@ -19,7 +19,7 @@ export let AuthorizeStep = (_dec = inject(AdalManager), _dec(_class = class Auth
       let isAuthenticated = this.adalManager.user.isAuthenticated;
 
       if (routes.some(i => !!i.config.auth) && !isAuthenticated) {
-        return this.adalManager.loginHandler(routingContext.fragment, url => next.cancel(new Redirect(url)), () => next.cancel(new Redirect('login redirect')));
+        return this.adalManager.loginHandler(routingContext.fragment, url => next.cancel(new Redirect(url)), () => next.cancel('login redirect'));
       } else if (routes.some(i => i.fragment == loginRoute) && isAuthenticated) {
         return next.cancel(new Redirect(''));
       }
