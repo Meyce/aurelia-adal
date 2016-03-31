@@ -25,14 +25,14 @@ var AuthService = exports.AuthService = (_dec = (0, _aureliaDependencyInjection2
   }
 
   AuthService.prototype.logout = function logout() {
-    this.adal.logOut();
+    this.adalManager.adal.logOut();
   };
 
   AuthService.prototype.getUserAsync = function getUserAsync() {
     var _this = this;
 
     return new Promise(function (resolve, reject) {
-      _this.adal.getUser(function (error, user) {
+      _this.adalManager.adal.getUser(function (error, user) {
         if (error) {
           reject(error);
         } else {

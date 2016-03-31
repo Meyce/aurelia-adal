@@ -10,12 +10,12 @@ export let AuthService = (_dec = inject(AdalManager), _dec(_class = class AuthSe
   }
 
   logout() {
-    this.adal.logOut();
+    this.adalManager.adal.logOut();
   }
 
   getUserAsync() {
     return new Promise((resolve, reject) => {
-      this.adal.getUser((error, user) => {
+      this.adalManager.adal.getUser((error, user) => {
         if (error) {
           reject(error);
         } else {

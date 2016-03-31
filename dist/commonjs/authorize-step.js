@@ -44,7 +44,7 @@ var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInject
         return _this.adalManager.loginHandler(routingContext.fragment, function (url) {
           return next.cancel(new _aureliaRouter.Redirect(url));
         }, function () {
-          return next.cancel(new _aureliaRouter.Redirect('login redirect'));
+          return next.cancel('login redirect');
         });
       } else if (routes.some(function (i) {
         return i.fragment == loginRoute;
