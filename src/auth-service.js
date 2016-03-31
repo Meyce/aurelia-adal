@@ -9,12 +9,12 @@ export class AuthService {
   }
 
   logout() {
-    this.adal.logOut();
+    this.adalManager.adal.logOut();
   }
 
   getUserAsync() {
     return new Promise((resolve, reject) => {
-      this.adal.getUser((error, user) => {
+      this.adalManager.adal.getUser((error, user) => {
         if (error) {
           reject(error);
         } else {
