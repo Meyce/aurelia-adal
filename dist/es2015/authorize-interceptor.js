@@ -1,6 +1,6 @@
 var _dec, _class;
 
-import inject from 'aurelia-dependency-injection';
+import { inject } from 'aurelia-dependency-injection';
 import * as Logging from 'aurelia-logging';
 import { AuthContext } from './auth-context';
 

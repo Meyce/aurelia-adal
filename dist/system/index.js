@@ -1,11 +1,9 @@
 'use strict';
 
-System.register(['./adal-config', './auth-filter', './authorize-step', './authorize-interceptor', './auth-service'], function (_export, _context) {
-  var AdalConfig;
+System.register(['./authorize-step', './authorize-interceptor', './auth-service', './adal-initializer'], function (_export, _context) {
+  var AdalInitializer;
   return {
-    setters: [function (_adalConfig) {
-      AdalConfig = _adalConfig.AdalConfig;
-    }, function (_authFilter) {}, function (_authorizeStep) {
+    setters: [function (_authorizeStep) {
       var _exportObj = {};
       _exportObj.AuthorizeStep = _authorizeStep.AuthorizeStep;
 
@@ -20,14 +18,16 @@ System.register(['./adal-config', './auth-filter', './authorize-step', './author
       _exportObj3.AuthService = _authService.AuthService;
 
       _export(_exportObj3);
+    }, function (_adalInitializer) {
+      AdalInitializer = _adalInitializer.AdalInitializer;
     }],
     execute: function () {
-      function configure(aurelia, settings) {
+      function configure(aurelia, config) {
         aurelia.globalResources('./auth-filter');
 
-        var adalConfig = aurelia.container.get(AdalConfig);
+        var adalInitializer = aurelia.container.get(AdalInitializer);
 
-        adalConfig.configure(settings);
+        adalInitializer.initialize(config);
       }
 
       _export('configure', configure);

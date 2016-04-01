@@ -4,17 +4,11 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-loggi
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.AdalConfig = undefined;
-
-  var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
-  var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
+  exports.AdalInitializer = undefined;
 
   var Logging = _interopRequireWildcard(_aureliaLogging);
 
   var Adal = _interopRequireWildcard(_adaljs);
-
-  var _authContext2 = _interopRequireDefault(_authContext);
 
   function _interopRequireWildcard(obj) {
     if (obj && obj.__esModule) {
@@ -33,12 +27,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-loggi
     }
   }
 
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -47,9 +35,9 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-loggi
 
   var _dec, _class;
 
-  var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection2.default)(Adal, _authContext2.default), _dec(_class = function () {
-    function AdalConfig(adal, authContext) {
-      _classCallCheck(this, AdalConfig);
+  var AdalInitializer = exports.AdalInitializer = (_dec = (0, _aureliaDependencyInjection.inject)(Adal, _authContext.AuthContext), _dec(_class = function () {
+    function AdalInitializer(adal, authContext) {
+      _classCallCheck(this, AdalInitializer);
 
       this.logger = Logging.getLogger('adal');
 
@@ -57,29 +45,24 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-loggi
       this.authContext = authContext;
     }
 
-    AdalConfig.prototype.configure = function configure(config) {
+    AdalInitializer.prototype.initialize = function initialize(config) {
       var _this = this;
 
       try {
-        var settings = {};
-
-        var existingHash = _aureliaPal2.default.location.hash;
-        var pathDefault = _aureliaPal2.default.location.href;
+        var existingHash = _aureliaPal.PLATFORM.location.hash;
+        var pathDefault = _aureliaPal.PLATFORM.location.href;
         if (existingHash) {
           pathDefault = pathDefault.replace(existingHash, '');
         }
 
-        config = config || {};
+        var _config = {};
 
-        settings.tenant = config.tenant;
-        settings.clientId = config.clientId;
-        settings.endpoints = config.endpoints;
-        settings.localLoginUrl = config.localLoginUrl;
-        settings.redirectUri = config.redirectUri || pathDefault;
-        settings.postLogoutRedirectUri = config.postLogoutRedirectUri || pathDefault;
+        _config.redirectUri = pathDefault;
+        _config.postLogoutRedirectUri = pathDefault;
 
+        Object.assign(_config, config);
 
-        var adalContext = this.adal.inject(settings);
+        var adalContext = this.adal.inject(_config);
         this.logger.info('AdalContext created');
         this.logger.debug(adalContext);
 
@@ -97,6 +80,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-loggi
       }
     };
 
-    return AdalConfig;
+    return AdalInitializer;
   }()) || _class);
 });

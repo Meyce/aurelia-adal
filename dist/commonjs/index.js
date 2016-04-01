@@ -33,14 +33,12 @@ Object.defineProperty(exports, 'AuthService', {
 });
 exports.configure = configure;
 
-var _adalConfig = require('./adal-config');
+var _adalInitializer = require('./adal-initializer');
 
-require('./auth-filter');
-
-function configure(aurelia, settings) {
+function configure(aurelia, config) {
   aurelia.globalResources('./auth-filter');
 
-  var adalConfig = aurelia.container.get(_adalConfig.AdalConfig);
+  var adalInitializer = aurelia.container.get(_adalInitializer.AdalInitializer);
 
-  adalConfig.configure(settings);
+  adalInitializer.initialize(config);
 }

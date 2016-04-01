@@ -1,4 +1,4 @@
-define(['exports', './authorize-step', './authorize-interceptor', './auth-service', './adal-config', './auth-filter'], function (exports, _authorizeStep, _authorizeInterceptor, _authService, _adalConfig) {
+define(['exports', './authorize-step', './authorize-interceptor', './auth-service', './adal-initializer'], function (exports, _authorizeStep, _authorizeInterceptor, _authService, _adalInitializer) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -24,11 +24,11 @@ define(['exports', './authorize-step', './authorize-interceptor', './auth-servic
     }
   });
   exports.configure = configure;
-  function configure(aurelia, settings) {
+  function configure(aurelia, config) {
     aurelia.globalResources('./auth-filter');
 
-    var adalConfig = aurelia.container.get(_adalConfig.AdalConfig);
+    var adalInitializer = aurelia.container.get(_adalInitializer.AdalInitializer);
 
-    adalConfig.configure(settings);
+    adalInitializer.initialize(config);
   }
 });

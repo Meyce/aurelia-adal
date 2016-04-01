@@ -11,7 +11,7 @@ System.register(['aurelia-dependency-injection', 'aurelia-logging', './auth-cont
 
   return {
     setters: [function (_aureliaDependencyInjection) {
-      inject = _aureliaDependencyInjection.default;
+      inject = _aureliaDependencyInjection.inject;
     }, function (_aureliaLogging) {
       Logging = _aureliaLogging;
     }, function (_authContext) {

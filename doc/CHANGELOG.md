@@ -1,3 +1,15 @@
+### 0.3.2 (2016-04-01)
+
+
+#### Bug Fixes
+
+* added logging dependency ([cba52d6b](git+https://github.com/MrTeyn/aurelia-adal.git/commit/cba52d6b6fb3ff1807ecc57a7829b40ae36dc079))
+* forgot to build ([522131db](git+https://github.com/MrTeyn/aurelia-adal.git/commit/522131db4ecce670b86e8c8b491e9ca50adb855b))
+* changed class name for authorize-step ([65b20678](git+https://github.com/MrTeyn/aurelia-adal.git/commit/65b20678a3ec7698017945d470fe6173cc492966))
+* build project files ([070a8e1b](git+https://github.com/MrTeyn/aurelia-adal.git/commit/070a8e1baff94d8fe2a624c671479ae3b1537b70))
+* **all:** added missing braces in import statements ([20f9007e](git+https://github.com/MrTeyn/aurelia-adal.git/commit/20f9007e5c0b0cc79607552688cadb1c30751012))
+
+
 ### 0.3.1 (2016-03-31)
 
 

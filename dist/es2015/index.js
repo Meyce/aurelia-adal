@@ -1,13 +1,12 @@
-import { AdalConfig } from './adal-config';
-import './auth-filter';
 export { AuthorizeStep } from './authorize-step';
 export { AuthorizeInterceptor } from './authorize-interceptor';
 export { AuthService } from './auth-service';
+import { AdalInitializer } from './adal-initializer';
 
-export function configure(aurelia, settings) {
+export function configure(aurelia, config) {
   aurelia.globalResources('./auth-filter');
 
-  let adalConfig = aurelia.container.get(AdalConfig);
+  let adalInitializer = aurelia.container.get(AdalInitializer);
 
-  adalConfig.configure(settings);
+  adalInitializer.initialize(config);
 }

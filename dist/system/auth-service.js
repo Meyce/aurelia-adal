@@ -11,7 +11,7 @@ System.register(['aurelia-dependency-injection', './auth-context'], function (_e
 
   return {
     setters: [function (_aureliaDependencyInjection) {
-      inject = _aureliaDependencyInjection.default;
+      inject = _aureliaDependencyInjection.inject;
     }, function (_authContext) {
       AuthContext = _authContext.AuthContext;
     }],

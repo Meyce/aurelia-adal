@@ -9,8 +9,6 @@ var _dec, _class;
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
-var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
 var _aureliaLogging = require('aurelia-logging');
 
 var Logging = _interopRequireWildcard(_aureliaLogging);
@@ -19,11 +17,9 @@ var _authContext = require('./auth-context');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AuthorizeInterceptor = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
+var AuthorizeInterceptor = (_dec = (0, _aureliaDependencyInjection.inject)(_authContext.AuthContext), _dec(_class = function () {
   function AuthorizeInterceptor(authContext) {
     _classCallCheck(this, AuthorizeInterceptor);
 

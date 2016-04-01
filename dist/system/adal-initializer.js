@@ -1,7 +1,7 @@
 'use strict';
 
 System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-logging', 'adaljs', './auth-context'], function (_export, _context) {
-  var inject, PLATFORM, Logging, Adal, AuthContext, _dec, _class, AdalConfig;
+  var inject, PLATFORM, Logging, Adal, AuthContext, _dec, _class, AdalInitializer;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -11,20 +11,20 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-logging
 
   return {
     setters: [function (_aureliaDependencyInjection) {
-      inject = _aureliaDependencyInjection.default;
+      inject = _aureliaDependencyInjection.inject;
     }, function (_aureliaPal) {
-      PLATFORM = _aureliaPal.default;
+      PLATFORM = _aureliaPal.PLATFORM;
     }, function (_aureliaLogging) {
       Logging = _aureliaLogging;
     }, function (_adaljs) {
       Adal = _adaljs;
     }, function (_authContext) {
-      AuthContext = _authContext.default;
+      AuthContext = _authContext.AuthContext;
     }],
     execute: function () {
-      _export('AdalConfig', AdalConfig = (_dec = inject(Adal, AuthContext), _dec(_class = function () {
-        function AdalConfig(adal, authContext) {
-          _classCallCheck(this, AdalConfig);
+      _export('AdalInitializer', AdalInitializer = (_dec = inject(Adal, AuthContext), _dec(_class = function () {
+        function AdalInitializer(adal, authContext) {
+          _classCallCheck(this, AdalInitializer);
 
           this.logger = Logging.getLogger('adal');
 
@@ -32,29 +32,24 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-logging
           this.authContext = authContext;
         }
 
-        AdalConfig.prototype.configure = function configure(config) {
+        AdalInitializer.prototype.initialize = function initialize(config) {
           var _this = this;
 
           try {
-            var settings = {};
-
             var existingHash = PLATFORM.location.hash;
             var pathDefault = PLATFORM.location.href;
             if (existingHash) {
               pathDefault = pathDefault.replace(existingHash, '');
             }
 
-            config = config || {};
+            var _config = {};
 
-            settings.tenant = config.tenant;
-            settings.clientId = config.clientId;
-            settings.endpoints = config.endpoints;
-            settings.localLoginUrl = config.localLoginUrl;
-            settings.redirectUri = config.redirectUri || pathDefault;
-            settings.postLogoutRedirectUri = config.postLogoutRedirectUri || pathDefault;
+            _config.redirectUri = pathDefault;
+            _config.postLogoutRedirectUri = pathDefault;
 
+            Object.assign(_config, config);
 
-            var adalContext = this.adal.inject(settings);
+            var adalContext = this.adal.inject(_config);
             this.logger.info('AdalContext created');
             this.logger.debug(adalContext);
 
@@ -72,10 +67,10 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-logging
           }
         };
 
-        return AdalConfig;
+        return AdalInitializer;
       }()) || _class));
 
-      _export('AdalConfig', AdalConfig);
+      _export('AdalInitializer', AdalInitializer);
     }
   };
 });
