@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AdalConfig = undefined;
+exports.AdalInitializer = undefined;
 
 var _dec, _class;
 
@@ -25,9 +25,9 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection.inject)(Adal, _authContext.AuthContext), _dec(_class = function () {
-  function AdalConfig(adal, authContext) {
-    _classCallCheck(this, AdalConfig);
+var AdalInitializer = exports.AdalInitializer = (_dec = (0, _aureliaDependencyInjection.inject)(Adal, _authContext.AuthContext), _dec(_class = function () {
+  function AdalInitializer(adal, authContext) {
+    _classCallCheck(this, AdalInitializer);
 
     this.logger = Logging.getLogger('adal');
 
@@ -35,29 +35,24 @@ var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection.in
     this.authContext = authContext;
   }
 
-  AdalConfig.prototype.configure = function configure(config) {
+  AdalInitializer.prototype.initialize = function initialize(config) {
     var _this = this;
 
     try {
-      var settings = {};
-
       var existingHash = _aureliaPal.PLATFORM.location.hash;
       var pathDefault = _aureliaPal.PLATFORM.location.href;
       if (existingHash) {
         pathDefault = pathDefault.replace(existingHash, '');
       }
 
-      config = config || {};
+      var _config = {};
 
-      settings.tenant = config.tenant;
-      settings.clientId = config.clientId;
-      settings.endpoints = config.endpoints;
-      settings.localLoginUrl = config.localLoginUrl;
-      settings.redirectUri = config.redirectUri || pathDefault;
-      settings.postLogoutRedirectUri = config.postLogoutRedirectUri || pathDefault;
+      _config.redirectUri = pathDefault;
+      _config.postLogoutRedirectUri = pathDefault;
 
+      Object.assign(_config, config);
 
-      var adalContext = this.adal.inject(settings);
+      var adalContext = this.adal.inject(_config);
       this.logger.info('AdalContext created');
       this.logger.debug(adalContext);
 
@@ -75,5 +70,5 @@ var AdalConfig = exports.AdalConfig = (_dec = (0, _aureliaDependencyInjection.in
     }
   };
 
-  return AdalConfig;
+  return AdalInitializer;
 }()) || _class);

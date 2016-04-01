@@ -6,7 +6,7 @@ import * as Logging from 'aurelia-logging';
 import * as Adal from 'adaljs';
 import { AuthContext } from './auth-context';
 
-export let AdalConfig = (_dec = inject(Adal, AuthContext), _dec(_class = class AdalConfig {
+export let AdalInitializer = (_dec = inject(Adal, AuthContext), _dec(_class = class AdalInitializer {
 
   constructor(adal, authContext) {
     this.logger = Logging.getLogger('adal');
@@ -15,27 +15,22 @@ export let AdalConfig = (_dec = inject(Adal, AuthContext), _dec(_class = class A
     this.authContext = authContext;
   }
 
-  configure(config) {
+  initialize(config) {
     try {
-      let settings = {};
-
       let existingHash = PLATFORM.location.hash;
       let pathDefault = PLATFORM.location.href;
       if (existingHash) {
         pathDefault = pathDefault.replace(existingHash, '');
       }
 
-      config = config || {};
+      let _config = {};
 
-      settings.tenant = config.tenant;
-      settings.clientId = config.clientId;
-      settings.endpoints = config.endpoints;
-      settings.localLoginUrl = config.localLoginUrl;
-      settings.redirectUri = config.redirectUri || pathDefault;
-      settings.postLogoutRedirectUri = config.postLogoutRedirectUri || pathDefault;
+      _config.redirectUri = pathDefault;
+      _config.postLogoutRedirectUri = pathDefault;
 
+      Object.assign(_config, config);
 
-      let adalContext = this.adal.inject(settings);
+      let adalContext = this.adal.inject(_config);
       this.logger.info('AdalContext created');
       this.logger.debug(adalContext);
 
