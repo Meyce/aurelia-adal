@@ -5,7 +5,7 @@ import * as Adal from 'adaljs';
 import {AuthContext} from './auth-context';
 
 @inject(Adal, AuthContext)
-export class AdalConfig {
+export class AdalInitializer {
 
   logger = Logging.getLogger('adal');
 
@@ -14,10 +14,8 @@ export class AdalConfig {
     this.authContext = authContext;
   }
 
-  configure(config) {
+  initialize(config) {
     try {
-      let settings = {};
-
       // redirect and logout_redirect are set to current location by default
       let existingHash = PLATFORM.location.hash;
       let pathDefault = PLATFORM.location.href;
@@ -25,19 +23,15 @@ export class AdalConfig {
         pathDefault = pathDefault.replace(existingHash, '');
       }
 
-      config = config || {};
+      let _config = {};
 
-      settings.tenant = config.tenant;
-      settings.clientId = config.clientId;
-      settings.endpoints = config.endpoints;
-      settings.localLoginUrl = config.localLoginUrl;
-      settings.redirectUri = config.redirectUri || pathDefault;
-      settings.postLogoutRedirectUri = config.postLogoutRedirectUri || pathDefault;
-      // TODO: additional options?
-      // settings.loginResource
-      // settings.cacheLocation: 'localStorage' | 'sessionStorage'
+      // defaults
+      _config.redirectUri = pathDefault;
+      _config.postLogoutRedirectUri = pathDefault;
 
-      let adalContext = this.adal.inject(settings);
+      Object.assign(_config, config);
+
+      let adalContext = this.adal.inject(_config);
       this.logger.info('AdalContext created')
       this.logger.debug(adalContext)
       
