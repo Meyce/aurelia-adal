@@ -6,10 +6,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-route
   });
   exports.AuthorizeStep = undefined;
 
-  var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
-  var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
-
   var Logging = _interopRequireWildcard(_aureliaLogging);
 
   function _interopRequireWildcard(obj) {
@@ -29,12 +25,6 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-route
     }
   }
 
-  function _interopRequireDefault(obj) {
-    return obj && obj.__esModule ? obj : {
-      default: obj
-    };
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -43,7 +33,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-route
 
   var _dec, _class;
 
-  var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
+  var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection.inject)(_authContext.AuthContext), _dec(_class = function () {
     function AuthorizeStep(authContext) {
       _classCallCheck(this, AuthorizeStep);
 
@@ -53,7 +43,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-pal', 'aurelia-route
     }
 
     AuthorizeStep.prototype.run = function run(routingContext, next) {
-      var hash = _aureliaPal2.default.location.hash;
+      var hash = _aureliaPal.PLATFORM.location.hash;
 
       var isCallback = this.authContext.adal.isCallback(hash);
 

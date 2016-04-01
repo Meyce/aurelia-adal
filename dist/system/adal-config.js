@@ -11,15 +11,15 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-logging
 
   return {
     setters: [function (_aureliaDependencyInjection) {
-      inject = _aureliaDependencyInjection.default;
+      inject = _aureliaDependencyInjection.inject;
     }, function (_aureliaPal) {
-      PLATFORM = _aureliaPal.default;
+      PLATFORM = _aureliaPal.PLATFORM;
     }, function (_aureliaLogging) {
       Logging = _aureliaLogging;
     }, function (_adaljs) {
       Adal = _adaljs;
     }, function (_authContext) {
-      AuthContext = _authContext.default;
+      AuthContext = _authContext.AuthContext;
     }],
     execute: function () {
       _export('AdalConfig', AdalConfig = (_dec = inject(Adal, AuthContext), _dec(_class = function () {

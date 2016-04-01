@@ -9,15 +9,11 @@ var _dec, _class;
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
-var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
 var _authContext = require('./auth-context');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AuthService = exports.AuthService = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
+var AuthService = exports.AuthService = (_dec = (0, _aureliaDependencyInjection.inject)(_authContext.AuthContext), _dec(_class = function () {
   function AuthService(authContext) {
     _classCallCheck(this, AuthService);
 

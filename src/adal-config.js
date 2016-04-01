@@ -1,8 +1,8 @@
-﻿import inject from 'aurelia-dependency-injection';
-import PLATFORM from 'aurelia-pal';
+﻿import {inject} from 'aurelia-dependency-injection';
+import {PLATFORM} from 'aurelia-pal';
 import * as Logging from 'aurelia-logging';
 import * as Adal from 'adaljs';
-import AuthContext from './auth-context';
+import {AuthContext} from './auth-context';
 
 @inject(Adal, AuthContext)
 export class AdalConfig {

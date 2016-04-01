@@ -1,4 +1,4 @@
-﻿import inject from 'aurelia-dependency-injection';
+﻿import {inject} from 'aurelia-dependency-injection';
 import {AuthContext} from './auth-context';
 
 @inject(AuthContext)

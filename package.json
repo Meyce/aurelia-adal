@@ -5,17 +5,19 @@
   "keywords": [
     "aurelia",
     "plugin",
+    "authentication",
     "adal"
   ],
+  "homepage": "https://github.com/MrTeyn/aurelia-adal#readme",
   "bugs": {
     "url": "https://github.com/MrTeyn/aurelia-adal/issues"
   },
   "license": "CC0-1.0",
-  "author": "Martijn Hoebergen <rob@bluespire.com> (http://robeisenberg.com/)",
+  "author": "Martijn Hoebergen, Niels Vleming",
   "main": "dist/commonjs/index.js",
   "repository": {
     "type": "git",
-    "url": "http://github.com/aurelia/skeleton-plugin"
+    "url": "git+https://github.com/MrTeyn/aurelia-adal.git"
   },
   "devDependencies": {
     "aurelia-tools": "^0.1.18",

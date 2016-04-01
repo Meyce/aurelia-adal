@@ -11,9 +11,9 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-router'
 
   return {
     setters: [function (_aureliaDependencyInjection) {
-      inject = _aureliaDependencyInjection.default;
+      inject = _aureliaDependencyInjection.inject;
     }, function (_aureliaPal) {
-      PLATFORM = _aureliaPal.default;
+      PLATFORM = _aureliaPal.PLATFORM;
     }, function (_aureliaRouter) {
       Redirect = _aureliaRouter.Redirect;
     }, function (_aureliaLogging) {

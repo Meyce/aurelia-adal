@@ -9,11 +9,7 @@ var _dec, _class;
 
 var _aureliaDependencyInjection = require('aurelia-dependency-injection');
 
-var _aureliaDependencyInjection2 = _interopRequireDefault(_aureliaDependencyInjection);
-
 var _aureliaPal = require('aurelia-pal');
-
-var _aureliaPal2 = _interopRequireDefault(_aureliaPal);
 
 var _aureliaRouter = require('aurelia-router');
 
@@ -25,11 +21,9 @@ var _authContext = require('./auth-context');
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection2.default)(_authContext.AuthContext), _dec(_class = function () {
+var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInjection.inject)(_authContext.AuthContext), _dec(_class = function () {
   function AuthorizeStep(authContext) {
     _classCallCheck(this, AuthorizeStep);
 
@@ -39,7 +33,7 @@ var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInject
   }
 
   AuthorizeStep.prototype.run = function run(routingContext, next) {
-    var hash = _aureliaPal2.default.location.hash;
+    var hash = _aureliaPal.PLATFORM.location.hash;
 
     var isCallback = this.authContext.adal.isCallback(hash);
 

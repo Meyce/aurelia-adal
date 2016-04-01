@@ -1,7 +1,7 @@
 var _dec, _class;
 
-import inject from 'aurelia-dependency-injection';
-import PLATFORM from 'aurelia-pal';
+import { inject } from 'aurelia-dependency-injection';
+import { PLATFORM } from 'aurelia-pal';
 import { Redirect } from 'aurelia-router';
 import * as Logging from 'aurelia-logging';
 import { AuthContext } from './auth-context';

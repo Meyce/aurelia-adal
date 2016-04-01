@@ -1,6 +1,6 @@
 var _dec, _class;
 
-import inject from 'aurelia-dependency-injection';
+import { inject } from 'aurelia-dependency-injection';
 import { AuthContext } from './auth-context';
 
 export let AuthService = (_dec = inject(AuthContext), _dec(_class = class AuthService {
