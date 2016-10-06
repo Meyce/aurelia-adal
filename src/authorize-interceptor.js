@@ -25,7 +25,7 @@ export class AuthorizeInterceptor {
       this.logger.debug('retrieved token for resource:');
       this.logger.debug(tokenStored);
       // check endpoint mapping if provided
-      request.headers.append('Authorization', 'Bearer ' + tokenStored);
+      request.headers.add('Authorization', 'Bearer ' + tokenStored);
       //return request;
       return Promise.resolve(request)
     }
