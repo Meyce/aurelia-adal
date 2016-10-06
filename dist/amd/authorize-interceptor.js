@@ -57,7 +57,7 @@ define(['exports', 'aurelia-dependency-injection', 'aurelia-logging', './auth-co
         this.logger.debug('retrieved token for resource:');
         this.logger.debug(tokenStored);
 
-        _request.headers.append('Authorization', 'Bearer ' + tokenStored);
+        _request.headers.add('Authorization', 'Bearer ' + tokenStored);
 
         return Promise.resolve(_request);
       }

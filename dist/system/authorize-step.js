@@ -1,6 +1,8 @@
 'use strict';
 
 System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-router', 'aurelia-logging', './auth-context'], function (_export, _context) {
+  "use strict";
+
   var inject, PLATFORM, Redirect, Logging, AuthContext, _dec, _class, AuthorizeStep;
 
   function _classCallCheck(instance, Constructor) {
@@ -92,13 +94,13 @@ System.register(['aurelia-dependency-injection', 'aurelia-pal', 'aurelia-router'
                 }
               }
             } else {
-                if (!!routingContext.config.login) {
-                  this.logger.warn('user already logged in. redirecting...');
-                  var _startPage = this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.START_PAGE);
+              if (!!routingContext.config.login) {
+                this.logger.warn('user already logged in. redirecting...');
+                var _startPage = this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.START_PAGE);
 
-                  return next.cancel(new Redirect(_startPage));
-                }
+                return next.cancel(new Redirect(_startPage));
               }
+            }
 
             return next();
           }

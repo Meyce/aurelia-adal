@@ -43,7 +43,7 @@ var AuthorizeInterceptor = (_dec = (0, _aureliaDependencyInjection.inject)(_auth
       this.logger.debug('retrieved token for resource:');
       this.logger.debug(tokenStored);
 
-      _request.headers.append('Authorization', 'Bearer ' + tokenStored);
+      _request.headers.add('Authorization', 'Bearer ' + tokenStored);
 
       return Promise.resolve(_request);
     }

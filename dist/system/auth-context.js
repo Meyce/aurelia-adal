@@ -1,6 +1,8 @@
 'use strict';
 
 System.register(['aurelia-logging'], function (_export, _context) {
+  "use strict";
+
   var Logging, AuthContext;
 
   function _classCallCheck(instance, Constructor) {

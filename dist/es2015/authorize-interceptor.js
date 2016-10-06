@@ -25,7 +25,7 @@ export let AuthorizeInterceptor = (_dec = inject(AuthContext), _dec(_class = cla
       this.logger.debug('retrieved token for resource:');
       this.logger.debug(tokenStored);
 
-      request.headers.append('Authorization', 'Bearer ' + tokenStored);
+      request.headers.add('Authorization', 'Bearer ' + tokenStored);
 
       return Promise.resolve(request);
     }

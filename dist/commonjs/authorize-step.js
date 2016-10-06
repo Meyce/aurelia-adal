@@ -93,13 +93,13 @@ var AuthorizeStep = exports.AuthorizeStep = (_dec = (0, _aureliaDependencyInject
           }
         }
       } else {
-          if (!!routingContext.config.login) {
-            this.logger.warn('user already logged in. redirecting...');
-            var _startPage = this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.START_PAGE);
+        if (!!routingContext.config.login) {
+          this.logger.warn('user already logged in. redirecting...');
+          var _startPage = this.authContext.adal._getItem(this.authContext.adal.CONSTANTS.STORAGE.START_PAGE);
 
-            return next.cancel(new _aureliaRouter.Redirect(_startPage));
-          }
+          return next.cancel(new _aureliaRouter.Redirect(_startPage));
         }
+      }
 
       return next();
     }

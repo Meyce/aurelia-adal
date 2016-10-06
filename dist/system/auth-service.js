@@ -1,6 +1,8 @@
 'use strict';
 
 System.register(['aurelia-dependency-injection', './auth-context'], function (_export, _context) {
+  "use strict";
+
   var inject, AuthContext, _dec, _class, AuthService;
 
   function _classCallCheck(instance, Constructor) {

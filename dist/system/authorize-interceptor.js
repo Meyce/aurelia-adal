@@ -1,6 +1,8 @@
 'use strict';
 
 System.register(['aurelia-dependency-injection', 'aurelia-logging', './auth-context'], function (_export, _context) {
+  "use strict";
+
   var inject, Logging, AuthContext, _dec, _class, AuthorizeInterceptor;
 
   function _classCallCheck(instance, Constructor) {
@@ -42,7 +44,7 @@ System.register(['aurelia-dependency-injection', 'aurelia-logging', './auth-cont
             this.logger.debug('retrieved token for resource:');
             this.logger.debug(tokenStored);
 
-            _request.headers.append('Authorization', 'Bearer ' + tokenStored);
+            _request.headers.add('Authorization', 'Bearer ' + tokenStored);
 
             return Promise.resolve(_request);
           }
